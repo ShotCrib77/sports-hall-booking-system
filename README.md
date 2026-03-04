@@ -11,16 +11,9 @@ USE users_schema;
 
 CREATE TABLE users (
 	user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(32 ) NOT NULL UNIQUE,
+    username VARCHAR(32) NOT NULL UNIQUE,
     password_hash CHAR(60) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
+    role ENUM('customer', 'admin') NOT NULL DEFAULT 'customer'
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE sessions (
-    token CHAR(64) PRIMARY KEY,
-    user_id INT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    expires_at TIMESTAMP NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );

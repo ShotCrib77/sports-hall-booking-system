@@ -4,9 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react" ;
 import { useRouter } from "next/navigation";
+import SuccessfulAuthentification from "../components/SuccessfulAuthentification";
 
 export default function LoginComponent() {
     const router = useRouter();
+
+    const [successful, setSuccessful] = useState(false)
 
     const handleLogin = async (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -36,11 +39,12 @@ export default function LoginComponent() {
 
         if (!res.ok) {
             setApiError(true)
-        }
-
+        } else {
+            setSuccessful(true)
             setTimeout(() => {
                 router.push('/');
             }, 1500) 
+        }
         
         } catch (error) {
             console.error('Login error:', error);
@@ -58,6 +62,8 @@ export default function LoginComponent() {
 
     return (
         <main className="min-h-screen flex flex-col justify-center items-center font-mono">
+            {successful ? <SuccessfulAuthentification authType="Login" redirect="home" /> : <div/>}
+
             <form onSubmit={handleLogin} className="flex flex-col text-center xs:w-full md:w-lg lg:w-xl xl:w-2xl p-12 gap-8 bg-white rounded-2xl text-black">
                 <h1 className="font-bold text-4xl">
                     Login
@@ -102,7 +108,7 @@ export default function LoginComponent() {
                     <button
                         type="submit" 
                         disabled={isLoading}
-                        className="text-xl border-2 w-fit py-2 px-4 rounded-4xl self-center"
+                        className="text-xl border-2 w-fit py-2 px-4 self-center rounded-lg"
                     >
                         {isLoading ? "Loging in..." : "Login"}
                     </button>

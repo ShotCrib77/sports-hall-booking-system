@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { pool } from "@/app/lib/db";
+import { pool } from "../../lib/db";
 
 export async function POST() {
     try {

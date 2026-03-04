@@ -3,12 +3,22 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react" ;
-import SuccessfulRegistration from "../components/register/SuccessfulRegistration";
+import SuccessfulRegistration from "../components/SuccessfulAuthentification";
 import { useRouter } from "next/navigation";
+import SuccessfulAuthentification from "../components/SuccessfulAuthentification";
 
 export default function LoginComponent() {
     const router = useRouter();
     
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [formErrors, setFormErrors] = useState({ username: false, email: false, password: false });
+    const [isLoading, setIsLoading] = useState(false);
+    const [apiError, setApiError] = useState({ error: false, message: "" });
+    const [successful, setSuccessful] = useState(false)
+
     const handleRegister = async (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         
@@ -43,13 +53,12 @@ export default function LoginComponent() {
             if (!res.ok) {
                 setApiError({ error: true, message: data.error });
                 console.log(data.message)
+            } else {
+                setSuccessful(true)
+                setTimeout(() => {
+                    router.push('/login');
+                }, 1500) 
             }
-
-            setSuccessful(true)
-            setTimeout(() => {
-                router.push('/login');
-            }, 1500) 
-
 
         } catch (error) {
             console.error('Register error:', error);
@@ -58,18 +67,9 @@ export default function LoginComponent() {
         }
     }
 
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
-    const [formErrors, setFormErrors] = useState({ username: false, email: false, password: false });
-    const [isLoading, setIsLoading] = useState(false);
-    const [apiError, setApiError] = useState({ error: false, message: "" });
-    const [successful, setSuccessful] = useState(false)
-
     return (
         <main className="min-h-screen flex flex-col justify-center items-center font-mono">
-            {successful ? <SuccessfulRegistration /> : <div/>}
+            {successful ? <SuccessfulAuthentification authType="Registration" redirect="login"/> : <div/>}
 
             <form onSubmit={handleRegister} className="flex flex-col text-center xs:w-full md:w-lg lg:w-xl xl:w-2xl p-12 gap-8 bg-white rounded-2xl text-black">
                 <h1 className="font-bold text-4xl">
@@ -124,7 +124,7 @@ export default function LoginComponent() {
                     <button
                         type="submit" 
                         disabled={isLoading}
-                        className="text-xl border-2 w-fit py-2 px-4 rounded-4xl self-center"
+                        className="text-xl border-2 w-fit py-2 px-4 rounded-lg self-center"
                     >
                         Register
                     </button>
