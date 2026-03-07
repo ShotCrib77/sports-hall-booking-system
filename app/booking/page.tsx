@@ -10,7 +10,8 @@ const MONTHS = ["January", "February", "March", "April", "May", "June", "July", 
 export default function BookingPage() {
     const [date, setDate] = useState<Date | undefined>(new Date())
     const [bookings, setBookings] = useState<BookingSummary[]>([]);
-    
+    const [courts, setCourts] = useState<Court[]>([])
+
     const [selectedSlots, setSelectedSlots] = useState<BookingSummary[]>([])
     const highlightedDates = [...new Set(selectedSlots.map(slot => slot.booked_date))].map(dateStr => new Date(dateStr + "T00:00:00"))
 
@@ -47,17 +48,24 @@ export default function BookingPage() {
         return fetchedBookings;
     }
 
+    const getCourts = async () => {
+        const res = await fetch(`/api/courts?tennis`);
+        const { courts: fetchedCourts }: { courts: Court[] } = await res.json();
+        console.log(fetchedCourts)
+        return fetchedCourts;
+    }
+
     console.log(date, formattedDate)
 
     useEffect(() => {
-        const updateBookings = async () => {
-            const fetchedBookings = await getBookings()
+        const fetchData = async () => {
+            const fetchedBookings = await getBookings();
             setBookings(fetchedBookings);
+            const fetchedCourts = await getCourts();
+            setCourts(fetchedCourts);
         }
-        updateBookings()
+        fetchData()
     }, [])
-
-
 
     return (
         <main className="w-full min-h-screen flex justify-center items-center bg-gray-100">
@@ -66,7 +74,7 @@ export default function BookingPage() {
                     <div className="h-82">
                         <Calendar
                             modifiers={{ highlighted: highlightedDates }}
-                            modifiersClassNames={{ highlighted: "bg-green-600/70 rounded hover:bg-green-700/70 [&_button]:hover:bg-green-500/70" }}
+                            modifiersClassNames={{ highlighted: "bg-green-600/50 rounded-md hover:bg-green-700/70 [&_button]:hover:bg-green-500/60 text-white"}}
                             disabled={{ before: new Date() }}
                             mode="single"
                             selected={date}
@@ -79,10 +87,13 @@ export default function BookingPage() {
                     <div>
                         <h2 className="text-xs text-green-500 uppercase">Select a Time</h2>
                         <h1 className="pb-2 font-bold text-lg">{dateLabel}</h1>
-                        <AvailableTimes bookings={bookedBookings} date={formattedDate} selectedSlots={selectedSlots} handleSelect={handleSelect} />
+                        <AvailableTimes bookings={bookedBookings} courts={courts} date={formattedDate} selectedSlots={selectedSlots} handleSelect={handleSelect} />
                         <hr className="m-4" />
                         <div className="flex justify-between items-center gap-2">
-                            <span className="text-xs text-gray-500">{selectedSlots.length} slots selected</span>
+                            <div className="flex">
+                                <span className="text-xs text-gray-500">{selectedSlots.length} slots selected</span>
+                                <button onClick={() => setSelectedSlots([])} className="text-xs text-gray-500">&nbsp;- Clear</button>
+                            </div>
                             <button className={`px-4 py-1 text-sm font-bold rounded-md ${selectedSlots.length === 0 ? "bg-gray-200 text-gray-500 cursor-default" : "bg-green-500 text-white"}`}>Book</button>
                         </div>
                     </div>

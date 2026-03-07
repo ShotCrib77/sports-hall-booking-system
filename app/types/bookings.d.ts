@@ -1,26 +1,3 @@
-type BookingSlot = {
-    time: string;
-    booked: boolean;
-}
-
-type Court = {
-    courtId: number;
-    name: string;
-    slots: BookingSlot[];
-}
-
-type TimesObject = {
-    courts: Court[];
-}
-
-type SelectedSlot = {
-    courtId: number;
-    slot: BookingSlot;
-    date: string;
-}
-
-type MonthAvailability = Record<string, TimesObject>
-
 type BookingRow = {
     user_id: number
     court_id: number

@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
                     booked_date BETWEEN ? AND
                     DATE_ADD(?, INTERVAL ? DAY)`
         const [rows] = await pool.execute(sql, [startDate, startDate, days]);
-        const bookings = rows  as Partial<BookingRow>[];
+        const bookings = rows as Partial<BookingRow>[];
         return NextResponse.json({ bookings }, {status: 200})
     } catch (error) {
         console.error(error)
