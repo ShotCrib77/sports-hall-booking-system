@@ -2,36 +2,37 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react" ;
-import SuccessfulRegistration from "../components/SuccessfulAuthentification";
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import SuccessfulAuthentification from "../components/SuccessfulAuthentification";
 
-export default function LoginComponent() {
+export default function RegisterComponent() {
     const router = useRouter();
     
-    const [username, setUsername] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [formErrors, setFormErrors] = useState({ username: false, email: false, password: false });
+    const [formErrors, setFormErrors] = useState({ firstName: false, lastName: false, email: false, password: false });
     const [isLoading, setIsLoading] = useState(false);
     const [apiError, setApiError] = useState({ error: false, message: "" });
-    const [successful, setSuccessful] = useState(false)
+    const [successful, setSuccessful] = useState(false);
 
-    const handleRegister = async (event: React.SubmitEvent<HTMLFormElement>) => {
+    const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const newFormErrors = {
-            username: !username.trim(),
+            firstName: !firstName.trim(),
+            lastName: !lastName.trim(),
             email: !email.trim() || !emailRegex.test(email.trim()),
             password: !password.trim()
         };
             
         setFormErrors(newFormErrors);
         
-        if (newFormErrors.username ||newFormErrors.email || newFormErrors.password) {
+        if (newFormErrors.firstName || newFormErrors.lastName || newFormErrors.email || newFormErrors.password) {
             return;
         }
         
@@ -42,22 +43,23 @@ export default function LoginComponent() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    username: username,
+                    firstName: firstName,
+                    lastName: lastName,
                     password: password,
                     email: email
                 })
             });
 
-            const data = await res.json()
+            const data = await res.json();
 
             if (!res.ok) {
                 setApiError({ error: true, message: data.error });
-                console.log(data.message)
+                console.log(data.message);
             } else {
-                setSuccessful(true)
+                setSuccessful(true);
                 setTimeout(() => {
                     router.push('/login');
-                }, 1500) 
+                }, 1500);
             }
 
         } catch (error) {
@@ -65,7 +67,7 @@ export default function LoginComponent() {
         } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     return (
         <main className="min-h-screen flex flex-col justify-center items-center font-mono">
@@ -77,15 +79,30 @@ export default function LoginComponent() {
                 </h1>
                 
                 <div className="flex flex-col text-sm text-left gap-2">
-                    <h2 className="text-xl">Username</h2>
-                    <input 
-                        type="text"
-                        value={username}
-                        onChange={(event) => setUsername(event.target.value)}
-                        placeholder="Enter username"
-                        className={`text-lg outline-0 border-black border p-2 ${formErrors.username ? "border-red-600" : ""}`}
-                    />
-                    {formErrors.username ? <span className="text-red-600 mb-4">Input can&apos;t be empty</span> : apiError.message === "Username already exist" ? <span className="text-red-600 mb-4">Username already exists</span> : <div className="mb-4"/>}
+                    <div className="flex flex-col gap-2 flex-1">
+                        <h2 className="text-xl">First Name</h2>
+                        <input 
+                            type="text"
+                            value={firstName}
+                            onChange={(event) => setFirstName(event.target.value)}
+                            placeholder="Enter first name"
+                            className={`text-lg outline-0 border-black border p-2 ${formErrors.firstName ? "border-red-600" : ""}`}
+                        />
+                        {formErrors.firstName ? <span className="text-red-600 mb-4">Input can&apos;t be empty</span> : <div className="mb-4"/>}
+                    </div>
+
+                    <div className="flex flex-col gap-2 flex-1">
+                        <h2 className="text-xl">Last Name</h2>
+                        <input 
+                            type="text"
+                            value={lastName}
+                            onChange={(event) => setLastName(event.target.value)}
+                            placeholder="Enter last name"
+                            className={`text-lg outline-0 border-black border p-2 ${formErrors.lastName ? "border-red-600" : ""}`}
+                        />
+                        {formErrors.lastName ? <span className="text-red-600 mb-4">Input can&apos;t be empty</span> : <div className="mb-4"/>}
+                    </div>
+
 
                     <h2 className="text-xl">Email</h2>
                     <input 
@@ -99,24 +116,23 @@ export default function LoginComponent() {
 
                     <h2 className="text-xl">Password</h2>
                     <div className="flex flex-col gap-2">
-                    <div className="relative">
-                        <input 
-                            type={showPassword ? "text" : "password"}
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
-                            className={`text-lg outline-0 border-black border p-2 w-full ${formErrors.password ? "border-red-600" : ""}`}
-                            placeholder="Enter password"
-                        />
-                        <button
-                            type="button"
-                            className="absolute right-2 top-1/2 -translate-y-1/2"
-                            onClick={() => setShowPassword(!showPassword)}
-                        >
-                            {showPassword ? <Eye /> : <EyeOff />}
-                        </button>
-                    </div>
-
-                    {formErrors.password ? <span className="text-red-600">Input can&apos;t be empty</span> : <></>}
+                        <div className="relative">
+                            <input 
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                                onChange={(event) => setPassword(event.target.value)}
+                                className={`text-lg outline-0 border-black border p-2 w-full ${formErrors.password ? "border-red-600" : ""}`}
+                                placeholder="Enter password"
+                            />
+                            <button
+                                type="button"
+                                className="absolute right-2 top-1/2 -translate-y-1/2"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <Eye /> : <EyeOff />}
+                            </button>
+                        </div>
+                        {formErrors.password ? <span className="text-red-600">Input can&apos;t be empty</span> : <></>}
                     </div>
                 </div>
 

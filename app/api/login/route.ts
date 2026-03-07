@@ -3,32 +3,30 @@ import bcrypt from "bcryptjs";
 import { pool } from "../../lib/db";
 import { RowDataPacket } from "mysql2";
 import { cookies } from "next/headers";
-import { randomBytes } from "crypto";
 import { SignJWT } from "jose";
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
     try {
-        const { usernameOrEmail , password } = await request.json();
+        const { email, password } = await req.json();
 
-        const sqlSelect = "SELECT user_id, password_hash FROM users WHERE username = ? OR email = ?";
-        const resultSelect = await pool.execute(sqlSelect, [usernameOrEmail.toLowerCase(), usernameOrEmail.toLowerCase()]);
+        const sqlSelect = "SELECT user_id, password_hash FROM users WHERE email = ?";
+        const resultSelect = await pool.execute(sqlSelect, [email.toLowerCase()]);
         const rows = resultSelect[0] as RowDataPacket[];
  
         if (rows.length === 0) {
-            return NextResponse.json({ message: "Wrong Username/Email or Password" }, { status: 401 });
+            return NextResponse.json({ message: "Wrong Email or Password" }, { status: 401 });
         }
 
         const user = rows[0];
         const matches = await bcrypt.compare(password, user.password_hash);
 
         if (!matches) {
-            return NextResponse.json({ message: "Wrong Username/Email or Password" }, { status: 401 });
+            return NextResponse.json({ message: "Wrong Email or Password" }, { status: 401 });
         }
         
         const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
         if (!JWT_SECRET_KEY) {
-            console.error("JWT secret key is not defined");
             return NextResponse.json({ message: "Server configuration error" }, { status: 500 });
         }
 

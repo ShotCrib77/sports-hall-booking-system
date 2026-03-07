@@ -15,13 +15,13 @@ export default function LoginComponent() {
         event.preventDefault();
         
         const newFormErrors = {
-            usernameOrEmail: !usernameOrEmail.trim(),
+            email: !email.trim(),
             password: !password.trim()
         };
         
         setFormErrors(newFormErrors);
         
-        if (newFormErrors.usernameOrEmail || newFormErrors.password) {
+        if (newFormErrors.email || newFormErrors.password) {
             return;
         }
         
@@ -32,7 +32,7 @@ export default function LoginComponent() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                usernameOrEmail: usernameOrEmail,
+                email: email,
                 password: password
             })
         });
@@ -53,10 +53,10 @@ export default function LoginComponent() {
         }
     }
 
-    const [usernameOrEmail, setUsernameOrEmail] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [formErrors, setFormErrors] = useState({ usernameOrEmail: false, password: false });
+    const [formErrors, setFormErrors] = useState({ email: false, password: false });
     const [isLoading, setIsLoading] = useState(false);
     const [apiError, setApiError] = useState(false)
 
@@ -70,15 +70,15 @@ export default function LoginComponent() {
                 </h1>
                 
                 <div className="flex flex-col text-sm text-left gap-2">
-                    <h2 className="text-xl">Username/Email</h2>
+                    <h2 className="text-xl">Email</h2>
                     <input 
                         type="text"
-                        value={usernameOrEmail}
-                        onChange={(event) => setUsernameOrEmail(event.target.value)}
-                        placeholder="Enter username or email"
-                        className={`text-lg outline-0 border-black border p-2 ${formErrors.usernameOrEmail ? "border-red-600" : ""}`}
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        placeholder="Enter email"
+                        className={`text-lg outline-0 border-black border p-2 ${formErrors.email ? "border-red-600" : ""}`}
                     />
-                    {formErrors.usernameOrEmail ? <span className="text-red-600 mb-4">Input can&apos;t be empty</span> : <div className="mb-4"/>}
+                    {formErrors.email ? <span className="text-red-600 mb-4">Input can&apos;t be empty</span> : <div className="mb-4"/>}
 
                     <h2 className="text-xl">Password</h2>
                     <div className="flex flex-col gap-2">
