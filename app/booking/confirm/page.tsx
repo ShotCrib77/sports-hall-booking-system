@@ -128,7 +128,7 @@ export default function ConfirmBooking() {
                             </div>
                         </div>
                     </div>
-                    <Toaster />
+                    <Toaster position="top-center" />
                 </section>
             )}
         </main>

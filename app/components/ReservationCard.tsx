@@ -6,9 +6,10 @@ interface ReservationCardProps {
   reservation: Reservation;
   isPast?: boolean;
   onCancel?: (courtId: number, bookedDate: string, bookedTime: string) => void;
+  loadingCancel: boolean;
 }
 
-export default function ReservationCard({ reservation, isPast = false, onCancel }: ReservationCardProps) {
+export default function ReservationCard({ reservation, isPast = false, onCancel, loadingCancel }: ReservationCardProps) {
     const [confirming, setConfirming] = useState(false)
     const date = new Date(reservation.booked_date);
     const day = date.getDate();
@@ -90,10 +91,11 @@ export default function ReservationCard({ reservation, isPast = false, onCancel 
                         <span className="text-sm text-gray-600 font-medium">Cancel this booking?</span>
                         <div className="flex gap-2">
                             <button
+                                disabled={loadingCancel}
                                 onClick={() => onCancel?.(reservation.court_id, reservation.booked_date, reservation.booked_time)}
                                 className="flex-1 text-sm font-semibold text-white bg-red-500 hover:bg-red-600 transition-colors px-1 py-1 rounded-lg"
                             >
-                                Yes, cancel
+                                {loadingCancel ? "Cancelling" : "Yes, cancel"}
                             </button>
                             <button
                                 onClick={() => setConfirming(false)}
