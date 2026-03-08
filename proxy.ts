@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
-import { cookies } from "next/headers";
-
 export async function proxy(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
     
     if (!token) {
-        return NextResponse.redirect(new URL("/login", req.url));
+        const redirectTo = req.nextUrl.pathname
+        return NextResponse.redirect(new URL(`/login?redirectTo=${redirectTo}`, req.url));
     }
     
     const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
@@ -22,8 +21,9 @@ export async function proxy(req: NextRequest) {
             return NextResponse.redirect(new URL("/", req.url));
         }
 
-    } catch (error) {
-        return NextResponse.redirect(new URL("/login", req.url));
+    } catch {
+        const redirectTo = req.nextUrl.pathname
+        return NextResponse.redirect(new URL(`/login?redirectTo=${redirectTo}`, req.url));
     }
 }
 

@@ -3,12 +3,15 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import SuccessfulAuthentification from "../components/SuccessfulAuthentification";
 
 export default function RegisterComponent() {
     const router = useRouter();
-    
+
+    const searchParams = useSearchParams();
+    const redirectTo = searchParams.get("redirectTo") ? `/login?redirectTo=${searchParams.get("redirectTo")}` : "/login"
+
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -58,7 +61,7 @@ export default function RegisterComponent() {
             } else {
                 setSuccessful(true);
                 setTimeout(() => {
-                    router.push('/login');
+                    router.push(redirectTo);
                 }, 1500);
             }
 

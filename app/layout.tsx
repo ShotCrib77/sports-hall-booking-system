@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from 'next/font/google'
 import "./globals.css";
 import { AuthProvider } from "./context/AuthContext";
+import Navbar from "./components/Navbar";
 
 const dmSans = DM_Sans({ subsets: ['latin'], weight: ['400', '600', '700'] })
 
@@ -21,6 +22,7 @@ export default function RootLayout({
         className={`${dmSans.className}`}
       >
         <AuthProvider>
+          <Navbar/>
           {children}
         </AuthProvider>
       </body>

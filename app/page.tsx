@@ -14,7 +14,6 @@ export default function Home() {
                 <h1 className="bold text-5xl text-black mb-4">Welcome!</h1>
                 {loading ? <p>Loading...</p> : (isLoggedIn ? <LogoutButton /> : <LoginButton />)}
             </div>
-
         </div>
     );
 }

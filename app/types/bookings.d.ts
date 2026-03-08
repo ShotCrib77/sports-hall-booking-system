@@ -18,6 +18,13 @@ type Booking = {
 
 type BookingSummary = Pick<Booking, "court_id" | "booked_date" | "booked_time">
 
+type Reservation = Pick<Booking, "court_id" | "booked_date" | "booked_time" | "booking_status"> & Pick<Court, "court_name">
+
+type UserBooking = BookingSummary & {
+  court_name: string;
+};
+
+
 type User = {
     user_id: number
     first_name: string | null
@@ -31,5 +38,5 @@ type User = {
 type Court = {
     court_id: number
     court_name: string
-    sport: string | null
+    sport: string
 }

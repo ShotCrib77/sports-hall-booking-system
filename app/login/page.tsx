@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react" ;
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import SuccessfulAuthentification from "../components/SuccessfulAuthentification";
 
 export default function LoginComponent() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectTo = searchParams.get("redirectTo") ?? "/"
 
     const [successful, setSuccessful] = useState(false)
 
@@ -42,7 +44,7 @@ export default function LoginComponent() {
         } else {
             setSuccessful(true)
             setTimeout(() => {
-                router.push('/');
+                router.push(redirectTo);
             }, 1500) 
         }
         
@@ -113,7 +115,7 @@ export default function LoginComponent() {
                         {isLoading ? "Loging in..." : "Login"}
                     </button>
                     {apiError ? <span className="my-2 text-red-600">Incorrect username/email or password</span> : <div/>}
-                    <Link href="/register" className="text-blue-800 text-lg">Don&apos;t have an account? Sign up!</Link>
+                    <Link href={`/register?redirectTo=${redirectTo}`} className="text-blue-800 text-lg">Don&apos;t have an account? Sign up!</Link>
                 </div>
             </form>
         </main>

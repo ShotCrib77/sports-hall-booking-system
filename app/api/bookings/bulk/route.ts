@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
         }
 
-        const bookings: { courtId: number, booked_date: string, booked_time: string }[] = await req.json()
+        const bookings: { court_id: number, booked_date: string, booked_time: string }[] = await req.json()
 
         const connection = await pool.getConnection();
         await connection.beginTransaction();
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
             for (const booking of bookings) {
                 await connection.execute(
                     "INSERT INTO bookings (user_id, court_id, booked_date, booked_time) VALUES (?, ?, ?, ?)",
-                    [userId, booking.courtId, booking.booked_date, booking.booked_time]
+                    [userId, booking.court_id, booking.booked_date, booking.booked_time]
                 )
             }
             await connection.commit()
@@ -35,8 +35,13 @@ export async function POST(req: NextRequest) {
         }
 
         return NextResponse.json({ message: "Bookings successful" }, { status: 201 })
-    } catch (error) {
-        console.error(error);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+        if (error.code === 'ER_DUP_ENTRY') {
+            return NextResponse.json({ error: "Some slot already booked" }, { status: 409 })
+        }
+        console.error(error)
         return NextResponse.json({ error: "Server Error" }, { status: 500 })
     }
 }

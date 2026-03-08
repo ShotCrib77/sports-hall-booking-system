@@ -33,10 +33,10 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({error: "Unauthorized"}, {status: 401});
         }
 
-        const { courtId, booked_date, booked_time } = await req.json();
+        const { court_id, booked_date, booked_time } = await req.json();
 
         const sql = "INSERT INTO bookings (user_id, court_id, booked_date, booked_time) VALUES (?, ?, ?, ?)"
-        await pool.execute(sql, [userId, courtId, booked_date, booked_time]);
+        await pool.execute(sql, [userId, court_id, booked_date, booked_time]);
 
         return NextResponse.json({ message: "Successfully added booking" }, {status: 201})
         
