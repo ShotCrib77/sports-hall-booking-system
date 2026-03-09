@@ -4,6 +4,7 @@ import { Calendar } from "../components/ui/calendar";
 import AvailableTimes from "../components/AvailableTimes";
 import { useRouter } from "next/navigation";
 import SportsSelection from "../components/SportsSelection";
+import { motion } from "framer-motion"
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -100,19 +101,25 @@ export default function BookingPage() {
                         {/* Calendar */}
                         <div>
                             <h2 className="text-base text-green-500 uppercase tracking-[1px] font-semibold">Select a date</h2>
-                            <Calendar
-                                modifiers={{ highlighted: highlightedDates }}
-                                modifiersClassNames={{ highlighted: "bg-green-600/50 rounded-md hover:bg-green-700/70 [&_button]:hover:bg-green-500/60 text-white" }}
-                                disabled={{ before: new Date() }}
-                                mode="single"
-                                selected={date}
-                                onSelect={setDate}
-                                className="rounded-lg [&_.rdp-day_button]:text-lg [--cell-size:--spacing(10)]"
-                                classNames={{
-                                    weekday: "flex-1 rounded-md text-base font-normal text-muted-foreground select-none",
-                                    caption_label: "text-lg font-semibold",
-                                }}
-                            />
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                            >
+                                <Calendar
+                                    modifiers={{ highlighted: highlightedDates }}
+                                    modifiersClassNames={{ highlighted: "bg-green-600/50 rounded-md hover:bg-green-700/70 [&_button]:hover:bg-green-500/60 text-white" }}
+                                    disabled={{ before: new Date() }}
+                                    mode="single"
+                                    selected={date}
+                                    onSelect={setDate}
+                                    className="rounded-lg [&_.rdp-day_button]:text-lg [--cell-size:--spacing(10)]"
+                                    classNames={{
+                                        weekday: "flex-1 rounded-md text-base font-normal text-muted-foreground select-none",
+                                        caption_label: "text-lg font-semibold",
+                                    }}
+                                />
+                            </motion.div>
                         </div>
                     </div>
 

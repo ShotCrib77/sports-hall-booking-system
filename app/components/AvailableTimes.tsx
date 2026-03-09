@@ -17,13 +17,14 @@ export default function AvailableTimes({bookings, courts, date, selectedBookings
                 <div key={court.court_id}>
                     <h2 className="mb-1 text-lg font-semibold">{court.court_name} - 1h</h2>
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(80px,max-content))] gap-4">
-                        {baseArray.map(time => {
+                        {baseArray.map((time, index) => {
                             const existing = bookings.find(
                                 b => b.booked_time === time && b.court_id === court.court_id
                             );
                             return (
                                 <Time
                                     key={time}
+                                    index={index}
                                     time={time}
                                     date={existing ? existing.booked_date : date}
                                     courtId={court.court_id}

@@ -147,9 +147,10 @@ export default function MyReservationsPage() {
                     </div>
                     ) : (
                     <div className="flex flex-col gap-3">
-                        {displayed.map((r) => (
+                        {displayed.map((r, index) => (
                             <ReservationCard
                                 key={`${r.court_id}-${r.booked_date}-${r.booked_time}`}
+                                index={index}
                                 reservation={r}
                                 isPast={activeTab === "past"}
                                 onCancel={handleCancel}

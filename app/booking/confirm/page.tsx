@@ -97,6 +97,7 @@ export default function ConfirmBooking() {
                                 {bookings.map((booking, index) => (
                                     <div key={`${booking.court_id}-${booking.booked_date}-${booking.booked_time}`}>
                                         <BookingConfirmation
+                                            index={index}
                                             courtName={booking.court_name}
                                             date={booking.booked_date}
                                             time={booking.booked_time}

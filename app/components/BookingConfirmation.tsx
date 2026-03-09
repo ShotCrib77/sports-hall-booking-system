@@ -1,13 +1,14 @@
 import { useState } from "react";
-
+import { motion } from "framer-motion";
 interface BookingConfirmationProps {
+    index: number;
     courtName: string;
     date: string;
     time: string;
     handleRemove: (booking: Omit<UserBooking, "court_id">) => void;
 }
 
-export default function BookingConfirmation({courtName, date, time, handleRemove}: BookingConfirmationProps) {
+export default function BookingConfirmation({index, courtName, date, time, handleRemove}: BookingConfirmationProps) {
     const [confirmPending, setConfirmPending] = useState(false);
     const formattedDate = new Date(date + "T00:00:00").toLocaleDateString("en-GB", {
         weekday: "long",
@@ -19,7 +20,12 @@ export default function BookingConfirmation({courtName, date, time, handleRemove
     const formattedTime = `${time} - ${String((parseInt(time) + 1) % 24).padStart(2, "0")}:00`;
 
     return (
-        <div className="flex justify-between">
+        <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, delay: index * 0.1 }}
+            className="flex justify-between"
+        >
             <div className="flex items-center gap-4">
                 <div
                     className="px-3 py-2 text-sm md:text-base rounded-md font-bold bg-green-100 text-green-700"
@@ -45,6 +51,6 @@ export default function BookingConfirmation({courtName, date, time, handleRemove
             >
                 ✖
             </button>
-        </div>
+        </motion.div>
     );
 }

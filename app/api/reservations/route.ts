@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
                 OR
                 (b.booking_status IN ('completed', 'no_show') AND b.booked_date >= CURRENT_DATE - INTERVAL 30 DAY)
             )
-            ORDER BY b.booked_date DESC
+            ORDER BY b.booked_date ASC, b.booked_time ASC
         `;
 
         const [rows] = await pool.execute(sql, [userId]);
