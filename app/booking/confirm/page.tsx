@@ -67,7 +67,7 @@ export default function ConfirmBooking() {
 
             if (res.ok) {
                 localStorage.removeItem("pendingBookings")
-                router.push("/reservations?success=true");
+                router.push(`/reservations?success=true&amount=${bookings.length}`);
             } else {
                 toast.error("Something went wrong, please try again.");
             }

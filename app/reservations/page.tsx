@@ -1,14 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ReservationCard from "../components/ReservationCard";
 import StatCard from "../components/StatCard";
 import Link from "next/link";
 import { toast } from "sonner"
 import { Toaster } from "../components/ui/sonner";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type Tab = "upcoming" | "past";
 export default function MyReservationsPage() {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const hasShownToast = useRef(false);
+    const success = searchParams.get("success")
+    const amount = searchParams.get("amount")
+
     const [loadingCancel, setLoadingCancel] = useState(false);
     const [reservations, setReservations] = useState<Reservation[]>([]);
     const [loading, setLoading] = useState(true);
@@ -24,6 +33,11 @@ export default function MyReservationsPage() {
 
     useEffect(() => {
         getReservations();
+        if (success && !hasShownToast.current) {
+            hasShownToast.current = true;
+            toast.message(`Successfully added ${amount} booking(s)`)
+            router.replace(pathname, { scroll: false });
+        }
     }, []);
 
     const handleCancel = async (courtId: number, bookedDate: string, bookedTime: string) => {
