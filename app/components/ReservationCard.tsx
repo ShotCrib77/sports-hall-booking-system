@@ -35,7 +35,7 @@ export default function ReservationCard({ index, reservation, isPast = false, on
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, delay: index * 0.1 }}
-            className={`bg-gray-50 border rounded-2xl px-6 py-5 flex items-center gap-5 transition-shadow hover:shadow-md ${isPast ? "border-gray-100 opacity-80" : "border-gray-100"}`}
+            className={`bg-gray-50 border-2 rounded-2xl px-4 sm:px-6 py-5 flex items-center gap-5 transition-shadow hover:shadow-md ${isPast ? "border-gray-100 opacity-80" : "border-gray-100"}`}
         >
             {/* Date block */}
             <div className={`flex flex-col items-center justify-center w-16 h-16 rounded-xl shrink-0 ${isPast ? "bg-gray-50 border" : "bg-white border"}`}>

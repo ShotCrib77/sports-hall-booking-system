@@ -66,27 +66,27 @@ export default function MyReservationsPage() {
     return (
         <main className="min-h-screen bg-white font-sans">
 
-            <div className="max-w-5xl mx-auto px-10 py-12">
+            <div className="max-w-5xl mx-auto px-6 sm:px-10 py-12">
                 {/* Page header */}
                 <div className="flex items-end justify-between mb-9">
-                <div>
-                    <p className="text-sm font-bold uppercase tracking-widest text-green-500 mb-1.5">
-                        Reservations
-                    </p>
-                    <h1 className="text-[2rem] font-bold tracking-tight text-gray-900 leading-none">
-                    Your bookings
-                    </h1>
-                </div>
-                <Link
-                    href="/booking"
-                    className="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors"
-                >
-                    + Book a slot
-                </Link>
+                    <div>
+                        <p className="text-sm font-bold uppercase tracking-widest text-green-500 mb-1.5">
+                            Reservations
+                        </p>
+                        <h1 className="text-[2rem] font-bold tracking-tight text-gray-900 leading-none">
+                        Your bookings
+                        </h1>
+                    </div>
+                    <Link
+                        href="/booking"
+                        className="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors hidden md:block"
+                    >
+                        + Book a slot
+                    </Link>
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-3 gap-4 mb-10">
+                <div className="flex flex-wrap gap-4 mb-10 justify-center md:justify-start">
                     <StatCard
                         label="Upcoming"
                         value={loading ? "–" : upcoming.length}
@@ -130,13 +130,13 @@ export default function MyReservationsPage() {
                 {loading ? (
                     <div className="flex flex-col gap-3">
                         {[...Array(3)].map((_, i) => (
-                        <div
-                            key={i}
-                            className="h-22 bg-white border border-gray-100 rounded-2xl animate-pulse"
-                        />
+                            <div
+                                key={i}
+                                className="h-22 bg-white border border-gray-100 rounded-2xl animate-pulse"
+                            />
                         ))}
                     </div>
-                    ) : displayed.length === 0 ? (
+                ) : displayed.length === 0 ? (
                     <div className="text-center py-20 text-gray-400">
                         <p className="text-4xl mb-3">🎾</p>
                         <p className="text-sm">
@@ -145,7 +145,7 @@ export default function MyReservationsPage() {
                             : "No past reservations yet."}
                         </p>
                     </div>
-                    ) : (
+                ) : (
                     <div className="flex flex-col gap-3">
                         {displayed.map((r, index) => (
                             <ReservationCard
@@ -156,7 +156,7 @@ export default function MyReservationsPage() {
                                 onCancel={handleCancel}
                                 loadingCancel={loadingCancel}
                             />
-                            ))}
+                        ))}
                     </div>
                 )}
             </div>

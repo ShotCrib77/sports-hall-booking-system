@@ -92,8 +92,8 @@ export default function BookingPage() {
     return (
         <main>
             <section className="flex rounded-lg bg-white w-full min-h-[calc(100vh-80px)]">
-                <div className="p-6 flex flex-col md:flex-row gap-8 w-full">
-                    <div className="w-1/4 shrink-0">
+                <div className="p-8 flex flex-col md:flex-row gap-8 w-full">
+                    <div className="w-full md:w-fit shrink-0 self-start">
                         <div>
                             <h2 className="text-base text-green-500 uppercase tracking-[1px] font-semibold">Select a sport</h2>
                             <SportsSelection sports={sports} selectedSport={selectedSport} setSelectedSport={setSelectedSport} />
@@ -123,11 +123,8 @@ export default function BookingPage() {
                         </div>
                     </div>
 
-                    {/* Divider — hidden on mobile */}
-                    <div className="hidden md:block self-stretch w-px bg-gray-200" />
-
                     {/* Time selection */}
-                    <div className="flex flex-col flex-1 pb-10 relative">
+                    <div className="flex flex-col flex-1 md:border-l md:pl-8">
                         <h2 className="text-base text-green-500 uppercase tracking-[1px] font-semibold">Select a time</h2>
                         <h1 className="pb-2 font-bold text-2xl">{dateLabel}</h1>
 
@@ -143,7 +140,7 @@ export default function BookingPage() {
 
 
                         {/* Footer */}
-                        <div className="absolute bottom-0 w-full pt-4 flex justify-between items-center md:border-t">
+                        <div className="mt-auto flex justify-between items-center border-t py-6 sticky bottom-0 bg-white ">
                             <div className="flex items-center text-base">
                                 <span className="text-gray-500">{selectedBookings.length} slots selected</span>
                                 <button
@@ -156,11 +153,7 @@ export default function BookingPage() {
                             <button
                                 disabled={selectedBookings.length === 0}
                                 onClick={() => handleConfirmation()}
-                                className={`px-6 py-1.5 text-lg font-bold rounded-md transition-colors ${
-                                    selectedBookings.length === 0
-                                        ? "bg-gray-200 text-gray-500 cursor-default"
-                                        : "bg-green-500 text-white hover:bg-green-600"
-                                }`}
+                                className={`px-6 py-1.5 text-lg font-bold rounded-md transition-colors ${selectedBookings.length === 0 ? "bg-gray-200 text-gray-500 cursor-default" : "bg-green-500 text-white hover:bg-green-600"}`}
                             >
                                 Book
                             </button>
