@@ -45,7 +45,7 @@ export default function LoginComponent() {
             setSuccessful(true)
             setTimeout(() => {
                 router.push(redirectTo);
-            }, 1500) 
+            }, 1500)
         }
         
         } catch (error) {
@@ -64,7 +64,7 @@ export default function LoginComponent() {
 
     return (
         <main className="min-h-screen flex flex-col justify-center items-center font-mono">
-            {successful ? <SuccessfulAuthentification authType="Login" redirect="home" /> : <div/>}
+            {successful ? <SuccessfulAuthentification authType="Login" /> : <div/>}
 
             <form onSubmit={handleLogin} className="flex flex-col text-center xs:w-full md:w-lg lg:w-xl xl:w-2xl p-12 gap-8 bg-white rounded-2xl text-black">
                 <h1 className="font-bold text-4xl">

@@ -25,7 +25,16 @@ export default function Navbar() {
 
     return (
         <header className="bg-white border-b-2 h-20 text-xl flex items-center px-8 text-gray-800">
-            <h1 className="text-3xl font-bold text-green-700">Courtside</h1>
+            <div className="flex items-center">
+                <h1 className="text-3xl font-bold text-green-700">Courtside</h1>
+                {userRole === "admin" && 
+                    <div className="flex items-center">
+                        <div className="w-px h-12 mx-4 bg-gray-800"/> 
+                        <h2 className="text-2xl">Admin</h2>
+                    </div>
+                }
+            </div>
+
             <nav className="hidden md:flex items-center ml-auto text-lg">
                 <div className="px-6 py-1 border-r border-gray-400 mr-6 gap-8 flex *hover:underline">
                     <Link href="/" className={isActive("/") ? "font-bold" : "font-normal text-gray-500"}>Home</Link>

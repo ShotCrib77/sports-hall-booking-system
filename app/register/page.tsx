@@ -62,6 +62,7 @@ export default function RegisterComponent() {
                 setSuccessful(true);
                 setTimeout(() => {
                     router.push(redirectTo);
+                    
                 }, 1500);
             }
 
@@ -74,7 +75,7 @@ export default function RegisterComponent() {
 
     return (
         <main className="min-h-screen flex flex-col justify-center items-center font-mono">
-            {successful ? <SuccessfulAuthentification authType="Registration" redirect="login"/> : <div/>}
+            {successful ? <SuccessfulAuthentification authType="Registration" /> : <div/>}
 
             <form onSubmit={handleRegister} className="flex flex-col text-center xs:w-full md:w-lg lg:w-xl xl:w-2xl p-12 gap-8 bg-white rounded-2xl text-black">
                 <h1 className="font-bold text-4xl">
