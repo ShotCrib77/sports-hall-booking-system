@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
         }
 
         const sql = `
-            SELECT b.court_id, b.booked_date, b.booked_time, b.booking_status, c.court_name
+            SELECT b.booking_id, b.court_id, b.booked_date, b.booked_time, b.booking_status, c.court_name
             FROM bookings b
             JOIN courts c ON b.court_id = c.court_id
             WHERE b.user_id = ?

@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     try {
         const { email, password } = await req.json();
 
-        const sqlSelect = "SELECT user_id, password_hash FROM users WHERE email = ?";
+        const sqlSelect = "SELECT user_id, password_hash, role FROM users WHERE email = ?";
         const resultSelect = await pool.execute(sqlSelect, [email.toLowerCase()]);
         const rows = resultSelect[0] as RowDataPacket[];
  

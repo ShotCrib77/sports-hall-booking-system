@@ -1,34 +1,7 @@
-type BookingRow = {
-    user_id: number
-    court_id: number
-    booked_date: string
-    booked_time: string
-    booking_status: "confirmed" | "cancelled" | "completed" | "no_show"
-    created_at: Date
-}
-
-type Booking = {
-    user_id: number
-    court_id: number
-    booked_date: string
-    booked_time: string
-    booking_status: "confirmed" | "cancelled" | "completed" | "no_show"
-    created_at: string
-}
-
-type BookingSummary = Pick<Booking, "court_id" | "booked_date" | "booked_time">
-
-type Reservation = Pick<Booking, "court_id" | "booked_date" | "booked_time" | "booking_status"> & Pick<Court, "court_name">
-
-type UserBooking = BookingSummary & {
-  court_name: string;
-};
-
-
 type User = {
     user_id: number
-    first_name: string | null
-    last_name: string | null
+    first_name: string
+    last_name: string
     email: string
     role: "customer" | "admin"
     is_banned: boolean
@@ -40,3 +13,32 @@ type Court = {
     court_name: string
     sport: string
 }
+
+type BookingRow = {
+    user_id: number
+    court_id: number
+    booked_date: string
+    booked_time: string
+    booking_status: "confirmed" | "cancelled" | "completed" | "no_show"
+    created_at: Date
+}
+
+type Booking = {
+    booking_id: number;
+    user_id: number
+    court_id: number
+    booked_date: string
+    booked_time: string
+    booking_status: "confirmed" | "cancelled" | "completed" | "no_show"
+    created_at: string
+}
+
+type BookingSummary = Pick<Booking, "court_id" | "booked_date" | "booked_time">
+
+type Reservation = Pick<Booking, "booking_id" | "court_id" | "booked_date" | "booked_time" | "booking_status"> & Pick<Court, "court_name">
+
+type UserBooking = BookingSummary & {
+  court_name: string;
+};
+
+type AdminBooking = Pick<Booking, "booking_id" | "booked_time" | "booking_status"> & Pick<Court, "court_name"> & Pick<User, "first_name" | "last_name" | "email">

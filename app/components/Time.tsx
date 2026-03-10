@@ -17,7 +17,7 @@ export default function Time({ booked = false, index, courtId, date, time, selec
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, delay: index * 0.025 }}
-            className="w-16 h-10 text-xs rounded-md font-semibold bg-gray-50 text-gray-300 line-through decoration-2 cursor-not-allowed"
+            className="w-16 h-10 text-base rounded-md font-semibold bg-gray-50 text-gray-300 line-through decoration-2 cursor-not-allowed"
         >
             {time}
         </motion.button>

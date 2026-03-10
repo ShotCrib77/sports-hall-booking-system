@@ -6,7 +6,7 @@ interface ReservationCardProps {
     index: number;
     reservation: Reservation;
     isPast?: boolean;
-    onCancel?: (courtId: number, bookedDate: string, bookedTime: string) => void;
+    onCancel?: (bookingId: number) => void;
     loadingCancel: boolean;
 }
 
@@ -74,7 +74,7 @@ export default function ReservationCard({ index, reservation, isPast = false, on
                             <div className="flex gap-2">
                                 <button
                                     disabled={loadingCancel}
-                                    onClick={() => onCancel?.(reservation.court_id, reservation.booked_date, reservation.booked_time)}
+                                    onClick={() => onCancel?.(reservation.booking_id)}
                                     className="flex-1 text-sm font-semibold text-white bg-red-500 hover:bg-red-600 transition-colors px-1 py-1 rounded-lg"
                                 >
                                     {loadingCancel ? "Cancelling" : "Yes, cancel"}

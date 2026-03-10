@@ -22,7 +22,7 @@ export default function RegisterComponent() {
     const [apiError, setApiError] = useState({ error: false, message: "" });
     const [successful, setSuccessful] = useState(false);
 
-    const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleRegister = async (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

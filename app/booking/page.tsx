@@ -48,10 +48,8 @@ export default function BookingPage() {
     const getBookings = async () => {
         const today = new Date()
         const formattedCurrentDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`
-        console.log(`/api/bookings?startDate=${formattedCurrentDate}&days=40`)
         const res = await fetch(`/api/bookings?startDate=${formattedCurrentDate}&days=40`);
         const { bookings: fetchedBookings }: { bookings: BookingSummary[] } = await res.json();
-        console.log(fetchedBookings)
         fetchedBookings.forEach(booking => booking.booked_time = booking.booked_time.slice(0, 5))
         return fetchedBookings;
     }

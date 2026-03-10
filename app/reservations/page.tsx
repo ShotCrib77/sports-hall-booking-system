@@ -40,7 +40,7 @@ export default function MyReservationsPage() {
         }
     }, []);
 
-    const handleCancel = async (courtId: number, bookedDate: string, bookedTime: string) => {
+    const handleCancel = async (bookingId: number) => {
         setLoadingCancel(true);
         try {
             const res = await fetch("/api/bookings/cancel", {
@@ -48,7 +48,7 @@ export default function MyReservationsPage() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({courtId, bookedDate, bookedTime})
+                body: JSON.stringify({bookingId})
             });
 
             if (res.ok) {
