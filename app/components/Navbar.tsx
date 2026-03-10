@@ -40,6 +40,7 @@ export default function Navbar() {
                     <Link href="/" className={isActive("/") ? "font-bold" : "font-normal text-gray-500"}>Home</Link>
                     <Link href="/booking" className={isActive("/booking") ? "font-bold" : "font-normal text-gray-500"}>Book a slot</Link>
                     <Link href="/reservations" className={isActive("/reservations") ? "font-bold" : "font-normal text-gray-500"}>My bookings</Link>
+                    {userRole === "admin" && <Link href="/admin/bookings" className={isActive("/admin/bookings") ? "font-bold" : "font-normal text-gray-500"}>Admin bookings</Link>}
                 </div>
                 {loading ? <p>Loading...</p> : (isLoggedIn ? <LogoutButton /> : <LoginButton />)}
             </nav>

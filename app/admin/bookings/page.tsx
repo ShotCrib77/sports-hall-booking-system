@@ -160,7 +160,6 @@ export default function AdminBookings() {
                         </tbody>
                     </table>
                 </div>
-                <p className="text-xs text-gray-400 mt-3">Click any booking to complete, mark no-show, or reset.</p>
             </div>
             <Toaster position="top-center" />
         </main>

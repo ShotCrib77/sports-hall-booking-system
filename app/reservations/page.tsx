@@ -152,7 +152,6 @@ export default function MyReservationsPage() {
                     </div>
                 ) : displayed.length === 0 ? (
                     <div className="text-center py-20 text-gray-400">
-                        <p className="text-4xl mb-3">🎾</p>
                         <p className="text-sm">
                         {activeTab === "upcoming"
                             ? "No upcoming reservations. Go book a slot!"
