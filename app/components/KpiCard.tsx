@@ -1,13 +1,10 @@
-import { useState, useEffect } from "react";
-import { TrendingUp, TrendingDown, Minus } from "lucide-react";
-
 interface KpiCardProps {
     label: string;
     data: number | string;
     color: string;
 }
 
-export default function KpiCard({ label, data, color}: KpiCardProps) {
+export default function KpiCard({ label, data}: KpiCardProps) {
     return (
         <div
             className="relative rounded-2xl overflow-hidden w-52 shadow-sm border"
