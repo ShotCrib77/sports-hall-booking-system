@@ -1,6 +1,7 @@
 import Time from "./Time";
 
 interface AvailableTimesProps {
+    today: Date | undefined;
     bookings: BookingSummary[];
     courts: Court[];
     date: string;
@@ -9,7 +10,12 @@ interface AvailableTimesProps {
 }
 
 const times = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"];
-export default function AvailableTimes({bookings, courts, date, selectedBookings, handleSelect} : AvailableTimesProps) {
+export default function AvailableTimes({today, bookings, courts, date, selectedBookings, handleSelect} : AvailableTimesProps) {
+    const isPast = (time: string) => {
+        if (!today) return false;
+        const isToday = date === today.toISOString().split("T")[0];
+        return isToday && today.getHours() >= parseInt(time.split(":")[0]);
+    };
 
     return (
         <div className="flex flex-col gap-6 mb-8">
@@ -21,6 +27,9 @@ export default function AvailableTimes({bookings, courts, date, selectedBookings
                             const existing = bookings.find(
                                 b => b.booked_time === time && b.court_id === court.court_id
                             );
+                            
+                            const past = isPast(time);
+
                             return (
                                 <Time
                                     key={time}
@@ -28,7 +37,7 @@ export default function AvailableTimes({bookings, courts, date, selectedBookings
                                     time={time}
                                     date={existing ? existing.booked_date : date}
                                     courtId={court.court_id}
-                                    booked={!!existing}
+                                    booked={!!existing || past}
                                     selected={!existing && selectedBookings.some(
                                         b => b.court_id === court.court_id && b.booked_date === date && b.booked_time === time
                                     )}

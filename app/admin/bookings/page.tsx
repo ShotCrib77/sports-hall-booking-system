@@ -2,12 +2,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import DateTab from "../../components/DateTab";
-import StatusButton from "../../components/StatusButton";
-import StatusCard from "../../components/StatusCard";
 import { toast } from "sonner";
 import { Toaster } from "../../components/ui/sonner";
+import Tabel from "../../components/Tabel";
 
-const TIMES = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"];
+const times = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"];
 
 type DateTab = "today" | "tomorrow" | "pick";
 const dateToStr = (d: Date) => d.toISOString().split("T")[0];
@@ -110,56 +109,15 @@ export default function AdminBookings() {
                     <DateTab type="pick" active={activeTab === "pick"} onClick={() => setActiveTab("pick")} pickedDate={pickedDate} onPickedDate={setPickedDate} />
                 </div>
 
-                {/* Time tabel */}
-                <div className="bg-white rounded-xl border border-gray-200 overflow-auto">
-                    <table className="w-full text-sm border-collapse">
-                        <thead>
-                            <tr className="border-b border-gray-100">
-                                <th className="text-left px-4 py-3 text-gray-400 font-medium w-16 sticky left-0 bg-white">Time</th>
-                                {courts.map((court) => (
-                                    <th key={court.court_id} className="text-left px-3 py-3 text-gray-600 font-medium whitespace-nowrap min-w-36">
-                                        {court.court_name}
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
+                <Tabel
+                    courts={courts}
+                    times={times}
+                    activeCell={activeCell}
+                    getBooking={getBooking}
+                    setActiveCell={setActiveCell}
+                    updateStatus={updateStatus}
+                />
 
-                        <tbody>
-                            {TIMES.map((time, i) => (
-                                <tr key={time} className={i % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
-                                    <td className="px-4 py-2.5 text-gray-400 font-mono text-xs sticky left-0 bg-inherit">{time}</td>
-
-                                    {courts.map((court) => {
-                                        const booking = getBooking(court, time);
-                                        if (!booking) return <td key={court.court_id} className="px-3 py-2.5" />;
-
-                                        const isActive = activeCell === booking.booking_id;
-
-                                        return (
-                                            <td key={court.court_id} className="px-3 py-2 relative">
-                                                <StatusCard bookingId={booking.booking_id} bookingStatus={booking.booking_status} customerName={`${booking.first_name} ${booking.last_name}`} isActive={isActive} setActiveCell={setActiveCell} />
-
-
-                                                {/* Inline action panel */}
-                                                {isActive && (
-                                                    <div className="absolute z-20 top-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-3 min-w-48">
-                                                        <div className="text-xs text-gray-500 mb-1">{booking.email}</div>
-                                                        <div className="text-xs font-medium text-gray-700 mb-2">{booking.court_name} · {booking.booked_time}</div>
-                                                        <div className="flex flex-col gap-1">
-                                                            <StatusButton variant="completed" disabled={booking.booking_status === "completed"} onClick={() => updateStatus(booking.booking_id, "completed")} />
-                                                            <StatusButton variant="no_show" disabled={booking.booking_status === "no_show"} onClick={() => updateStatus(booking.booking_id, "no_show")} />
-                                                            <StatusButton variant="confirmed" disabled={booking.booking_status === "confirmed"} onClick={() => updateStatus(booking.booking_id, "confirmed")} />
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </td>
-                                        );
-                                    })}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <Toaster position="top-center" />
         </main>

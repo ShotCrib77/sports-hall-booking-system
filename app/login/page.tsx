@@ -30,23 +30,23 @@ export default function LoginComponent() {
         setIsLoading(true);
 
         try {
-        const res = await fetch("api/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
-        });
+            const res = await fetch("api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
 
-        if (!res.ok) {
-            setApiError(true)
-        } else {
-            setSuccessful(true)
-            setTimeout(() => {
-                router.push(redirectTo);
-            }, 1500)
-        }
+            if (!res.ok) {
+                setApiError(true)
+            } else {
+                setSuccessful(true)
+                setTimeout(() => {
+                    router.push(redirectTo);
+                }, 1500)
+            }
         
         } catch (error) {
             console.error('Login error:', error);

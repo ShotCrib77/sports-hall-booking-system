@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
         }
 
         const sql = `SELECT court_id, booked_date, booked_time FROM bookings
-                    WHERE booking_status = 'confirmed' AND
+                    WHERE booking_status IN ('confirmed', 'completed') AND
                     booked_date BETWEEN ? AND
                     DATE_ADD(?, INTERVAL ? DAY)`
         const [rows] = await pool.execute(sql, [startDate, startDate, days]);

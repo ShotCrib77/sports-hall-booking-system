@@ -3,6 +3,7 @@ import { DM_Sans } from 'next/font/google'
 import "./globals.css";
 import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
+import { TooltipProvider } from "./components/ui/tooltip";
 
 const dmSans = DM_Sans({ subsets: ['latin'], weight: ['400', '600', '700'] })
 
@@ -22,8 +23,10 @@ export default function RootLayout({
         className={`${dmSans.className}`}
       >
         <AuthProvider>
+          <TooltipProvider>
           <Navbar/>
           {children}
+          </TooltipProvider>
         </AuthProvider>
       </body>
     </html>

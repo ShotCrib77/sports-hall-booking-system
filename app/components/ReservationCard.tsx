@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion"
+import DateTooltip from "./DateTooltip";
 
 interface ReservationCardProps {
     index: number;
@@ -37,20 +38,21 @@ export default function ReservationCard({ index, reservation, isPast = false, on
             transition={{ duration: 0.25, delay: index * 0.1 }}
             className={`bg-gray-50 border-2 rounded-2xl px-4 sm:px-6 py-5 flex items-center gap-5 transition-shadow hover:shadow-md ${isPast ? "border-gray-100 opacity-80" : "border-gray-100"}`}
         >
-            {/* Date block */}
-            <div className={`flex flex-col items-center justify-center w-16 h-16 rounded-xl shrink-0 ${isPast ? "bg-gray-50 border" : "bg-white border"}`}>
-                <span className={`text-[10px] font-bold uppercase tracking-widest ${isPast ? "text-gray-400" : "text-green-500"}`}>
-                    {month}
-                </span>
+            <DateTooltip text={date.toISOString().slice(0, 10)}>
+                <div className={`flex flex-col items-center justify-center w-16 h-16 rounded-xl shrink-0 ${isPast ? "bg-gray-50 border" : "bg-white border"}`} >
+                    <span className={`text-[10px] font-bold uppercase tracking-widest ${isPast ? "text-gray-400" : "text-green-500"}`}>
+                        {month}
+                    </span>
 
-                <span className="text-xl font-bold leading-tight text-gray-900">
-                    {day}
-                </span>
+                    <span className="text-xl font-bold leading-tight text-gray-900">
+                        {day}
+                    </span>
 
-                <span className="text-xs text-gray-400">
-                    {weekday}
-                </span>
-            </div>
+                    <span className="text-xs text-gray-400">
+                        {weekday}
+                    </span>
+                </div>
+            </DateTooltip>
 
             {/* Info */}
             <div className="flex-1 min-w-0 flex items-center gap-4">

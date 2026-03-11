@@ -13,39 +13,39 @@ export async function GET(req: NextRequest) {
 
     try {
         const kpiSql = `SELECT
-                COUNT(DISTINCT u.user_id) AS total_signups,
-                COUNT(DISTINCT CASE WHEN u.created_at BETWEEN ? AND ? THEN u.user_id END) AS new_signups,
-                COUNT(DISTINCT CASE WHEN u.is_banned = 1 THEN u.user_id END) AS banned_users,
-                COUNT(CASE WHEN b.created_at BETWEEN ? AND ? THEN 1 END) AS total_bookings,
-                ROUND(COUNT(CASE WHEN b.created_at BETWEEN ? AND ? AND b.booking_status = 'cancelled' THEN 1 END) * 100
-                    / NULLIF(COUNT(CASE WHEN b.created_at BETWEEN ? AND ? THEN 1 END), 0), 1) AS cancelled_percentage,
-                ROUND(COUNT(CASE WHEN b.created_at BETWEEN ? AND ? AND b.booking_status = 'no_show' THEN 1 END) * 100
-                    / NULLIF(COUNT(CASE WHEN b.created_at BETWEEN ? AND ? THEN 1 END), 0), 1) AS no_show_percentage
-                FROM users u
-                LEFT JOIN bookings b ON u.user_id = b.user_id
+            COUNT(DISTINCT u.user_id) AS total_signups,
+            COUNT(DISTINCT CASE WHEN u.created_at BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) - INTERVAL 1 SECOND THEN u.user_id END) AS new_signups,
+            COUNT(DISTINCT CASE WHEN u.is_banned = 1 THEN u.user_id END) AS banned_users,
+            COUNT(CASE WHEN b.created_at BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) - INTERVAL 1 SECOND THEN 1 END) AS total_bookings,
+            ROUND(COUNT(CASE WHEN b.created_at BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) - INTERVAL 1 SECOND AND b.booking_status = 'cancelled' THEN 1 END) * 100
+                / NULLIF(COUNT(CASE WHEN b.created_at BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) - INTERVAL 1 SECOND THEN 1 END), 0), 1) AS cancelled_percentage,
+            ROUND(COUNT(CASE WHEN b.created_at BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) - INTERVAL 1 SECOND AND b.booking_status = 'no_show' THEN 1 END) * 100
+                / NULLIF(COUNT(CASE WHEN b.created_at BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) - INTERVAL 1 SECOND THEN 1 END), 0), 1) AS no_show_percentage
+            FROM users u
+            LEFT JOIN bookings b ON u.user_id = b.user_id
         `
 
         
         const kpiParams = Array(6).fill([from, to]).flat();
         const [kpiRows] = await pool.execute<RowDataPacket[]>(kpiSql, kpiParams);
         const kpiData = kpiRows[0] as KpiData;
-        
+                
         const bookingsBreakdownSql = `SELECT
-                COUNT(CASE WHEN b.created_at BETWEEN ? AND ? AND b.booking_status = 'confirmed' THEN 1 END) AS confirmed_bookings,
-                COUNT(CASE WHEN b.created_at BETWEEN ? AND ? AND b.booking_status = 'completed' THEN 1 END) AS completed_bookings,
-                COUNT(CASE WHEN b.created_at BETWEEN ? AND ? AND b.booking_status = 'cancelled' THEN 1 END) AS cancelled_bookings,
-                COUNT(CASE WHEN b.created_at BETWEEN ? AND ? AND b.booking_status = 'no_show' THEN 1 END) AS no_show_bookings
-                FROM bookings b
+            COUNT(CASE WHEN b.created_at BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) - INTERVAL 1 SECOND AND b.booking_status = 'confirmed' THEN 1 END) AS confirmed_bookings,
+            COUNT(CASE WHEN b.created_at BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) - INTERVAL 1 SECOND AND b.booking_status = 'completed' THEN 1 END) AS completed_bookings,
+            COUNT(CASE WHEN b.created_at BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) - INTERVAL 1 SECOND AND b.booking_status = 'cancelled' THEN 1 END) AS cancelled_bookings,
+            COUNT(CASE WHEN b.created_at BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) - INTERVAL 1 SECOND AND b.booking_status = 'no_show' THEN 1 END) AS no_show_bookings
+            FROM bookings b
         `
         const bookingsBreakdownParams = Array(4).fill([from, to]).flat();
         const [bookingsBreakdownRows] = await pool.execute<RowDataPacket[]>(bookingsBreakdownSql, bookingsBreakdownParams);
         const bookingsBreakdownData = bookingsBreakdownRows[0] as BookingsBreakdownData;
 
         const sportsBreakdownSql = `SELECT c.sport, COUNT(*) AS total
-                FROM bookings b
-                JOIN courts c ON b.court_id = c.court_id
-                WHERE b.created_at BETWEEN ? AND ?
-                GROUP BY c.sport
+            FROM bookings b
+            JOIN courts c ON b.court_id = c.court_id
+            WHERE b.created_at BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) - INTERVAL 1 SECOND
+            GROUP BY c.sport
         `
         const [sportsBreakdownRows] = await pool.execute<RowDataPacket[]>(sportsBreakdownSql, [from, to]);
         const sportsBreakdownData = sportsBreakdownRows as SportBreakdownData[];

@@ -36,17 +36,17 @@ export default function Navbar() {
             </div>
 
             <nav className="hidden md:flex items-center ml-auto text-lg">
-            <div className="px-6 py-1 border-r border-gray-400 mr-6 gap-8 flex">
-                <Link href="/" className={`hover:underline ${isActive("/") ? "font-bold" : "font-normal text-gray-500"}`}>Home</Link>
-                <Link href="/booking" className={`hover:underline ${isActive("/booking") ? "font-bold" : "font-normal text-gray-500"}`}>Book a slot</Link>
-                <Link href="/reservations" className={`hover:underline ${isActive("/reservations") ? "font-bold" : "font-normal text-gray-500"}`}>My bookings</Link>
-                {userRole === "admin" && 
-                    <div className="flex gap-8">
-                        <Link href="/admin/bookings" className={`hover:underline ${isActive("/admin/bookings") ? "font-bold" : "font-normal text-gray-500"}`}>Admin bookings</Link>
-                        <Link href="/admin/stats" className={`hover:underline ${isActive("/admin/stats") ? "font-bold" : "font-normal text-gray-500"}`}>Admin stats</Link>
-                    </div>
-                }
-            </div>
+                <div className="px-6 py-1 border-r border-gray-400 mr-6 gap-8 flex">
+                    <Link href="/" className={`hover:underline ${isActive("/") ? "font-bold" : "font-normal text-gray-500"}`}>Home</Link>
+                    <Link href="/booking" className={`hover:underline ${isActive("/booking") ? "font-bold" : "font-normal text-gray-500"}`}>Book a slot</Link>
+                    <Link href="/reservations" className={`hover:underline ${isActive("/reservations") ? "font-bold" : "font-normal text-gray-500"}`}>My bookings</Link>
+                    {userRole === "admin" && 
+                        <div className="flex gap-8">
+                            <Link href="/admin/bookings" className={`hover:underline ${isActive("/admin/bookings") ? "font-bold" : "font-normal text-gray-500"}`}>Admin bookings</Link>
+                            <Link href="/admin/stats" className={`hover:underline ${isActive("/admin/stats") ? "font-bold" : "font-normal text-gray-500"}`}>Admin stats</Link>
+                        </div>
+                    }
+                </div>
                 {loading ? <p>Loading...</p> : (isLoggedIn ? <LogoutButton /> : <LoginButton />)}
             </nav>
 

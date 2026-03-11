@@ -16,30 +16,41 @@ interface DonutChartProps {
 }
 
 export default function DonutChart({label, config, data}: DonutChartProps) {
-	return (
-		<Card>
-  			<CardHeader>
-				<CardTitle>
-					{label}
-				</CardTitle>
-			</CardHeader>
-			<CardContent>
-				<ChartContainer config={config} className="h-75">
-					<PieChart>
-						<Pie
-							data={data}
-							dataKey="value"
-							nameKey="name"
-							innerRadius={60}
-							outerRadius={100}
-							paddingAngle={2}
-							isAnimationActive={false}
-						/>
-						<ChartTooltip content={<ChartTooltipContent />} />
-						<ChartLegend content={<ChartLegendContent /> } />
-					</PieChart>
-				</ChartContainer>
-			</CardContent>
-		</Card>
-	)
+    const isEmpty = data.length === 0;
+
+    // Placeholder data to render a gray ring
+    const displayData = isEmpty
+        ? [{ name: "empty", value: 1, fill: "var(--color-gray-500)" }]
+        : data;
+    const displayConfig = isEmpty ? {} : config;
+
+    return (
+        <Card className={isEmpty ? "opacity-50" : ""}>
+            <CardHeader>
+                <CardTitle>{label}</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <ChartContainer config={displayConfig} className="h-75">
+                    <PieChart>
+                        <Pie
+                            data={displayData}
+                            dataKey="value"
+                            nameKey="name"
+                            innerRadius={60}
+                            outerRadius={100}
+                            paddingAngle={isEmpty ? 0 : 2}
+                            isAnimationActive={false}
+                        />
+                        {!isEmpty && <ChartTooltip content={<ChartTooltipContent />} />}
+                        {!isEmpty && <ChartLegend content={<ChartLegendContent />} />}
+                    </PieChart>
+                </ChartContainer>
+                {isEmpty && (
+                    <p className="text-center text-muted-foreground text-sm -mt-4">
+                        No data avalibale for this period
+                    </p>
+                )}
+            </CardContent>
+        </Card>
+    )
 }

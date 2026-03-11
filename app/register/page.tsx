@@ -60,10 +60,33 @@ export default function RegisterComponent() {
                 console.log(data.message);
             } else {
                 setSuccessful(true);
-                setTimeout(() => {
-                    router.push(redirectTo);
-                    
-                }, 1500);
+                try {
+                    const res = await fetch("api/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            email: email,
+                            password: password
+                        })
+                    });
+
+                    if (!res.ok) {
+                        setTimeout(() => {
+                            router.push(redirectTo);
+                        }, 750);
+                    } else {
+                        setTimeout(() => {
+                            const directRedirect = searchParams.get("redirectTo") ?? "/reservations";
+                            router.push(directRedirect);
+                        }, 750)
+                    }
+                
+                } catch (error) {
+                    console.error('Login error:', error);
+                } finally {
+                    setIsLoading(false)
+                }
+
             }
 
         } catch (error) {

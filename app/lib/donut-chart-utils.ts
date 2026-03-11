@@ -1,4 +1,3 @@
-// donut-chart-utils.ts
 import { ChartConfig } from "../components/ui/chart";
 
 const CHART_COLORS = [
@@ -21,7 +20,7 @@ export function bookingsToDonut(d: BookingsBreakdownData): DonutChartInput {
     name: label,
     value: d[key],
     fill: CHART_COLORS[i % CHART_COLORS.length],
-  }));
+  })).filter(slice => slice.value > 0);
 
   const config: ChartConfig = Object.fromEntries(
     entries.map(([, label], i) => [
@@ -38,7 +37,7 @@ export function sportsToDonut(rows: SportBreakdownData[]): DonutChartInput {
     name: row.sport,
     value: row.total,
     fill: CHART_COLORS[i % CHART_COLORS.length],
-  }));
+  })).filter(slice => slice.value > 0);
 
   const config: ChartConfig = Object.fromEntries(
     rows.map((row, i) => [

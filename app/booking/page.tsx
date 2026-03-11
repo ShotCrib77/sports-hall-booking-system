@@ -7,6 +7,7 @@ import SportsSelection from "../components/SportsSelection";
 import { motion } from "framer-motion"
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const today = new Date();
 
 export default function BookingPage() {
     const router = useRouter();
@@ -15,7 +16,10 @@ export default function BookingPage() {
     const [allCourts, setAllCourts] = useState<Court[]>([])
     const [courts, setCourts] = useState<Court[]>([])
     
-    const [selectedSport, setSelectedSport] = useState("Tennis");
+    const [selectedSport, setSelectedSport] = useState(() => {
+        if (typeof window === "undefined") return "Tennis";
+        return localStorage.getItem("selectedSport") ?? "Tennis";
+    });
 
     const [selectedBookings, setSelectedBookings] = useState<BookingSummary[]>([])
     const highlightedDates = [...new Set(selectedBookings.map(booking => booking.booked_date))].map(dateStr => new Date(dateStr + "T00:00:00"))
@@ -45,9 +49,9 @@ export default function BookingPage() {
         })
     }
 
-    const getBookings = async () => {
-        const today = new Date()
-        const formattedCurrentDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`
+    const getBookings = async (fromDate?: Date) => {
+        const date = fromDate ?? new Date()
+        const formattedCurrentDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`
         const res = await fetch(`/api/bookings?startDate=${formattedCurrentDate}&days=40`);
         const { bookings: fetchedBookings }: { bookings: BookingSummary[] } = await res.json();
         fetchedBookings.forEach(booking => booking.booked_time = booking.booked_time.slice(0, 5))
@@ -87,6 +91,10 @@ export default function BookingPage() {
         filterCourts()
     }, [selectedSport, allCourts])
 
+    useEffect(() => {
+        localStorage.setItem("selectedSport", selectedSport)
+    }, [selectedSport])
+
     return (
         <main>
             <section className="flex rounded-lg bg-white w-full min-h-[calc(100vh-80px)]">
@@ -105,6 +113,7 @@ export default function BookingPage() {
                                 viewport={{ once: true }}
                             >
                                 <Calendar
+                                    onMonthChange={(month) => {getBookings(month).then(setBookings)}}
                                     modifiers={{ highlighted: highlightedDates }}
                                     modifiersClassNames={{ highlighted: "bg-green-600/50 rounded-md hover:bg-green-700/70 [&_button]:hover:bg-green-500/60 text-white" }}
                                     disabled={{ before: new Date() }}
@@ -128,6 +137,7 @@ export default function BookingPage() {
 
                         <div className="max-w-xl">
                             <AvailableTimes
+                                today={today}
                                 bookings={bookedBookings}
                                 courts={courts}
                                 date={formattedDate}

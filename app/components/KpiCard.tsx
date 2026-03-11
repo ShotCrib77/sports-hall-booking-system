@@ -1,7 +1,6 @@
 interface KpiCardProps {
     label: string;
     data: number | string;
-    color: string;
 }
 
 export default function KpiCard({ label, data}: KpiCardProps) {
