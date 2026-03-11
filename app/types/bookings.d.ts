@@ -42,3 +42,40 @@ type UserBooking = BookingSummary & {
 };
 
 type AdminBooking = Pick<Booking, "booking_id" | "booked_time" | "booking_status"> & Pick<Court, "court_name"> & Pick<User, "first_name" | "last_name" | "email">
+
+type KpiData = {
+    total_signups: number;
+    new_signups: number;
+    banned_users: number;
+    total_bookings: number;
+    cancelled_percentage: number;
+    no_show_percentage: number;
+}
+
+
+type BookingsBreakdownData = {
+    confirmed_bookings: number;
+    completed_bookings: number;
+    cancelled_bookings: number;
+    no_show_bookings: number;
+}
+
+type SportBreakdownData = {
+    sport: string;
+    total: number;
+}
+
+type HeatMapData = {
+    totalCourts: number;
+    heatMapMatrix: Array<number[]>;
+}
+
+type AdminData = {
+    kpiData: KpiData;
+    bookingsBreakdownData: BookingsBreakdownData;
+    sportsBreakdownData: SportBreakdownData[];
+    heatMapData: HeatMapData;
+} 
+
+type DonutSlice = { name: string; value: number; fill: string };
+type DonutChartInput = { config: ChartConfig; data: DonutSlice[] };
