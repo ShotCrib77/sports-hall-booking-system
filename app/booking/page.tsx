@@ -1,10 +1,9 @@
 "use client"
 import { useEffect, useState } from "react";
 import { Calendar } from "../components/ui/calendar";
-import AvailableTimes from "../components/AvailableTimes";
+import AvailableTimes from "../components/booking/AvailableTimes";
 import { useRouter } from "next/navigation";
-import SportsSelection from "../components/SportsSelection";
-import { motion } from "framer-motion"
+import SportsSelection from "../components/booking/SportsSelection";
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const today = new Date();

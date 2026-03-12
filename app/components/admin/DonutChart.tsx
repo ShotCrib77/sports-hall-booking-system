@@ -1,9 +1,9 @@
 "use client";
 
-import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "../components/ui/chart"
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "../../components/ui/chart"
 import { PieChart, Pie } from "recharts"
-import { ChartConfig } from "../components/ui/chart"
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { ChartConfig } from "../../components/ui/chart"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 interface DonutChartProps {
 	label: string,
@@ -25,7 +25,7 @@ export default function DonutChart({label, config, data}: DonutChartProps) {
     const displayConfig = isEmpty ? {} : config;
 
     return (
-        <Card className={`w-88 max-w-full overflow-hidden ${isEmpty ? "opacity-50" : ""}`}>
+        <Card className={`w-88 md:w-fit max-w-full overflow-hidden ${isEmpty ? "opacity-50" : ""}`}>
             <CardHeader className="self-start flex flex-col">
                 <CardTitle>{label}</CardTitle>
             </CardHeader>

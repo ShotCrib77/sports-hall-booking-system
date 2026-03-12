@@ -24,15 +24,9 @@ export default function DateTab({ type, active, onClick, pickedDate, onPickedDat
         return "Pick date";
     };
 
-    const btnClass = `px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-        active
-        ? "bg-green-500 text-white"
-        : "bg-white border border-gray-200 text-gray-600 hover:border-gray-300"
-    }`;
-
     return (
         <div className="flex items-center gap-2">
-            <button onClick={onClick} className={btnClass}>
+            <button onClick={onClick} className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${active ? "bg-green-500 text-white": "bg-white border border-gray-200 text-gray-600 hover:border-gray-400"}`}>
                 {getLabel()}
             </button>
             {type === "pick" && active && (

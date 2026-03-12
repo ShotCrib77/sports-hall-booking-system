@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import ReservationCard from "../components/ReservationCard";
-import StatCard from "../components/StatCard";
+import ReservationCard from "../components/reservations/ReservationCard";
+import StatCard from "../components/admin/StatCard";
 import Link from "next/link";
 import { toast } from "sonner"
 import { Toaster } from "../components/ui/sonner";
@@ -78,7 +78,7 @@ export default function MyReservationsPage() {
     const displayed = activeTab === "upcoming" ? upcoming : past;
 
     return (
-        <main className="min-h-screen bg-white font-sans">
+        <main className="min-h-[calc(100vh-160px)] bg-white font-sans">
 
             <div className="max-w-5xl mx-auto px-6 sm:px-10 py-12">
                 <div className="flex items-end justify-between mb-9">

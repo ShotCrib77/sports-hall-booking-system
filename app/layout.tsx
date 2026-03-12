@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from 'next/font/google'
 import "./globals.css";
 import { AuthProvider } from "./context/AuthContext";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/general/Navbar";
 import { TooltipProvider } from "./components/ui/tooltip";
 
 const dmSans = DM_Sans({ subsets: ['latin'], weight: ['400', '600', '700'] })

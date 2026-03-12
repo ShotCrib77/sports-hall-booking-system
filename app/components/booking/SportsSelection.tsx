@@ -6,12 +6,12 @@ export default function SportsSelection({sports, selectedSport, setSelectedSport
     }))
     
     return (
-        <div className="flex flex-wrap gap-4 pb-12 pt-2">
+        <div className="flex flex-wrap gap-4 pb-6 pt-2">
             {formattedSports.map(sport => (
                 <button
                     key={sport.sportName}
                     onClick={() => setSelectedSport(sport.sportName)}
-                    className={`px-4 py-2 rounded-full text-md font-semibold transition-colors flex items-center gap-2 ${
+                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors flex items-center gap-2 ${
                         selectedSport === sport.sportName
                             ? "bg-green-500 text-white"
                             : "bg-gray-100 text-gray-500 hover:bg-gray-200"

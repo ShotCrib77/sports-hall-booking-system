@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useAuth } from "../context/AuthContext";
-import LogoutButton from "./LogoutButton";
-import LoginButton from "./LoginButton";
+import { useAuth } from "../../context/AuthContext";
+import LogoutButton from "../general/LogoutButton";
+import LoginButton from "../general/LoginButton";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";

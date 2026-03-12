@@ -1,11 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import DateTab from "../../components/DateTab";
+import DateTab from "../../components/admin/DateTab";
 import { toast } from "sonner";
 import { Toaster } from "../../components/ui/sonner";
-import Tabel from "../../components/Tabel";
-import SportsSelection from "../../components/SportsSelection";
+import Tabel from "../../components/admin/Tabel";
+import SportsDropdown from "../../components/admin/SportsDropdown";
 
 const times = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"];
 
@@ -111,20 +111,18 @@ export default function AdminBookings() {
 
             <div className="px-6 py-6 max-w-7xl mx-auto">
 
-                <div className="flex flex-wrap items-center gap-2 mb-5">
+                <div className="flex flex-wrap items-center gap-2 mb-5 w-full">
                     <DateTab type="today" active={activeTab === "today"} onClick={() => {setActiveTab("today"); setPickedDate(dateToStr(new Date()))}} />
 
                     <DateTab type="tomorrow" active={activeTab === "tomorrow"} onClick={() => {setActiveTab("tomorrow"); setTomorrowsDate()}} />
 
                     <DateTab type="pick" active={activeTab === "pick"} onClick={() => setActiveTab("pick")} pickedDate={pickedDate} onPickedDate={setPickedDate} />
-                </div>
-                <SportsSelection sports={[...new Set(courts.map((court) => court.sport))]} selectedSport={selectedSport} setSelectedSport={setSelectedSport} />
 
-                {/* Mobile fallback becuase making table responsive is pain */}
-                <div className="block lg:hidden p-6 text-center text-gray-500">
-                    <p className="font-medium">Bookings overview is only available on desktop.</p>
-                    <p className="text-sm mt-1">Please use a larger screen to manage bookings.</p>
+                    <div className="ml-auto">
+                        <SportsDropdown sports={[...new Set(courts.map(court => court.sport))]} selectedSport={selectedSport} setSelectedSport={setSelectedSport} />
+                    </div>
                 </div>
+                
 
                 <div className="hidden lg:block">
                     <Tabel
@@ -135,6 +133,12 @@ export default function AdminBookings() {
                         setActiveCell={setActiveCell}
                         updateStatus={updateStatus}
                     />
+                </div>
+
+                {/* Mobile fallback becuase making table responsive is pain */}
+                <div className="block lg:hidden p-6 text-center text-gray-500">
+                    <p className="font-medium">Bookings overview is only available on desktop.</p>
+                    <p className="text-sm mt-1">Please use a larger screen to manage bookings.</p>
                 </div>
 
             </div>

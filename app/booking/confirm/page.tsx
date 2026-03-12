@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import BookingConfirmation from "../../components/BookingConfirmation";
+import BookingConfirmation from "../../components/booking/BookingConfirmation";
 import Link from "next/link";
-import { BookingSummary } from "../../components/BookingSummary";
+import { BookingSummary } from "../../components/booking/BookingSummary";
 import { useRouter } from "next/navigation";
 import { Toaster } from "../../components/ui/sonner";
 import { toast } from "sonner"

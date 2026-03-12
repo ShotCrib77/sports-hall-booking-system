@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import SuccessfulAuthentification from "../components/SuccessfulAuthentification";
+import SuccessfulAuthentification from "../components/general/SuccessfulAuthentification";
 
 export default function RegisterComponent() {
     const router = useRouter();

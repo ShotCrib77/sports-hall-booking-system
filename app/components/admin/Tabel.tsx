@@ -12,7 +12,7 @@ interface TabelProps {
 
 export default function Tabel({ courts, times, activeCell, getBooking, setActiveCell, updateStatus }: TabelProps) {
     return (
-        <div className="bg-white rounded-xl border border-gray-200 ">
+        <div className="bg-white border-2 border-gray-200">
             <table className="w-full text-sm border-collapse">
                 <thead>
                     <tr className="border-b border-gray-100">

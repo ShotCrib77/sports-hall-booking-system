@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import DonutChart from "../../components/DonutChart";
+import DonutChart from "../../components/admin/DonutChart";
 import { bookingsToDonut, sportsToDonut } from "../../lib/donut-chart-utils";
-import KpiOverview from "../../components/KpiOverview";
-import HeatMap from "../../components/HeatMap";
-import DaysDropDown from "../../components/DaysDropDown";
+import KpiOverview from "../../components/admin/KpiOverview";
+import HeatMap from "../../components/admin/HeatMap";
+import DaysDropDown from "../../components/admin/DaysDropDown";
 
 export default function AdminStatsPage() {
     const [kpiData, setKpiData] = useState<KpiData>();
