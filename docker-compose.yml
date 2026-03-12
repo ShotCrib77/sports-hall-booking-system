@@ -1,0 +1,23 @@
+services:
+  nextjs:
+    build: .
+    ports:
+      - "4002:4002"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: Vq2T&zuK4-:p?~>5Dm}S_h
+      MYSQL_DATABASE: sports_hall
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql 
+    restart: unless-stopped
+
+volumes:
+  mysql_data:

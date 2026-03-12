@@ -42,7 +42,7 @@ export default function RegisterComponent() {
         setIsLoading(true);
 
         try {
-            const res = await fetch("api/register", {
+            const res = await fetch("/api/auth/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -60,7 +60,7 @@ export default function RegisterComponent() {
             } else {
                 setSuccessful(true);
                 try {
-                    const res = await fetch("api/login", {
+                    const res = await fetch("/api/auth/login", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({

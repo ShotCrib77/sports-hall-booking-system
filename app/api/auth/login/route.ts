@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { pool } from "../../lib/db";
+import { pool } from "../../../lib/db";
 import { RowDataPacket } from "mysql2";
 import { cookies } from "next/headers";
 import { SignJWT } from "jose";
