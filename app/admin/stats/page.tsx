@@ -67,12 +67,12 @@ export default function AdminStatsPage() {
 
     return (
         <main className="flex flex-col items-center w-full min-h-screen py-12">
-            <div className="self-end px-24">
+            <div className="self-end px-6 py-2 md:px-24">
                 <DaysDropDown setDays={setDays} days={days} setCustomFromTo={setCustomFromTo} />
             </div>
             {kpiData && <KpiOverview kpiData={kpiData} />}
 
-            <section className="flex gap-4 border-y-2 p-8">
+            <section className="flex flex-wrap justify-center gap-4 border-y-2 md:p-8 py-6">
                 <DonutChart
                     label="Bookings Overview"
                     data={bookingsChart?.data ?? []}
@@ -84,7 +84,8 @@ export default function AdminStatsPage() {
                     config={sportsChart?.config ?? {}}
                 />
             </section>
-            <div className="p-8 rounded-lg border shadow-md my-8 flex flex-col items-center">
+
+            <div className="p-4 md:p-8 rounded-lg border shadow-md my-8 flex flex-col items-center">
                 <h2 className="text-lg font-semibold mb-4">Bookings heat map</h2>
                 {(heatMapMatrix && totalCourts) && <HeatMap heatMapMatrix={heatMapMatrix} totalCourts={totalCourts} />}
             </div>

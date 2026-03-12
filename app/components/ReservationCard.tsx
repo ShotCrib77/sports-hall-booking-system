@@ -56,8 +56,8 @@ export default function ReservationCard({ index, reservation, isPast = false, on
 
             {/* Info */}
             <div className="flex-1 min-w-0 flex items-center gap-4">
-                <div className="flex flex-col items-center gap-">
-                    <span className={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${isPast ? "bg-gray-100 text-gray-400" : "bg-green-50 text-green-600"}`}>
+                <div className="flex flex-col items-start gap-1">
+                    <span className={`text-xs font-bold uppercase tracking-wider px-1 py-0.5 rounded-full ${isPast ? "bg-gray-100 text-gray-400" : "bg-green-50 text-green-600"}`}>
                         {reservation.court_name}
                     </span>
 

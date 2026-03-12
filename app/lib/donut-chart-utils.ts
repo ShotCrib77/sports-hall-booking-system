@@ -34,16 +34,19 @@ export function bookingsToDonut(d: BookingsBreakdownData): DonutChartInput {
 
 export function sportsToDonut(rows: SportBreakdownData[]): DonutChartInput {
   const data: DonutSlice[] = rows.map((row, i) => ({
-    name: row.sport,
+    name: row.sport.charAt(0).toUpperCase() + row.sport.slice(1),
     value: row.total,
     fill: CHART_COLORS[i % CHART_COLORS.length],
   })).filter(slice => slice.value > 0);
 
   const config: ChartConfig = Object.fromEntries(
-    rows.map((row, i) => [
-      row.sport,
-      { label: row.sport, color: CHART_COLORS[i % CHART_COLORS.length] },
-    ])
+    rows.map((row, i) => {
+      const capitalized = row.sport.charAt(0).toUpperCase() + row.sport.slice(1);
+      return [
+        capitalized,
+        { label: capitalized, color: CHART_COLORS[i % CHART_COLORS.length] },
+      ];
+    })
   );
 
   return { data, config };

@@ -5,11 +5,17 @@ import DateTab from "../../components/DateTab";
 import { toast } from "sonner";
 import { Toaster } from "../../components/ui/sonner";
 import Tabel from "../../components/Tabel";
+import SportsSelection from "../../components/SportsSelection";
 
 const times = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"];
 
 type DateTab = "today" | "tomorrow" | "pick";
-const dateToStr = (d: Date) => d.toISOString().split("T")[0];
+const dateToStr = (d: Date) => {
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+};
 
 export default function AdminBookings() {
     const [activeTab, setActiveTab] = useState<DateTab>("today");
@@ -17,8 +23,8 @@ export default function AdminBookings() {
     const [pickedDate, setPickedDate] = useState(dateToStr(new Date()))
     const [bookings, setBookings] = useState<AdminBooking[]>([])
     const [courts, setCourts] = useState<Court[]>([])
+    const [selectedSport, setSelectedSport] = useState("Tennis");
 
-    
     const fetchBookings = useCallback(async () => {
         try {
             const res = await fetch(`/api/admin/bookings?date=${pickedDate}`);
@@ -66,7 +72,11 @@ export default function AdminBookings() {
 
                 if (res.ok) {
                     const { courts: fetchedCourts } : { courts: Court[] } = await res.json();
-                    setCourts(fetchedCourts)
+                    const editedCourts = fetchedCourts.map(court => ({
+                        ...court,
+                        sport: court.sport.charAt(0).toUpperCase() + court.sport.slice(1)
+                    }));
+                    setCourts(editedCourts);
                 } else {
                     toast.error("Something went wrong, please try again.");
                 }
@@ -101,22 +111,31 @@ export default function AdminBookings() {
 
             <div className="px-6 py-6 max-w-7xl mx-auto">
 
-                <div className="flex items-center gap-2 mb-5">
+                <div className="flex flex-wrap items-center gap-2 mb-5">
                     <DateTab type="today" active={activeTab === "today"} onClick={() => {setActiveTab("today"); setPickedDate(dateToStr(new Date()))}} />
 
                     <DateTab type="tomorrow" active={activeTab === "tomorrow"} onClick={() => {setActiveTab("tomorrow"); setTomorrowsDate()}} />
 
                     <DateTab type="pick" active={activeTab === "pick"} onClick={() => setActiveTab("pick")} pickedDate={pickedDate} onPickedDate={setPickedDate} />
                 </div>
+                <SportsSelection sports={[...new Set(courts.map((court) => court.sport))]} selectedSport={selectedSport} setSelectedSport={setSelectedSport} />
 
-                <Tabel
-                    courts={courts}
-                    times={times}
-                    activeCell={activeCell}
-                    getBooking={getBooking}
-                    setActiveCell={setActiveCell}
-                    updateStatus={updateStatus}
-                />
+                {/* Mobile fallback becuase making table responsive is pain */}
+                <div className="block lg:hidden p-6 text-center text-gray-500">
+                    <p className="font-medium">Bookings overview is only available on desktop.</p>
+                    <p className="text-sm mt-1">Please use a larger screen to manage bookings.</p>
+                </div>
+
+                <div className="hidden lg:block">
+                    <Tabel
+                        courts={courts.filter(court => court.sport === selectedSport)}
+                        times={times}
+                        activeCell={activeCell}
+                        getBooking={getBooking}
+                        setActiveCell={setActiveCell}
+                        updateStatus={updateStatus}
+                    />
+                </div>
 
             </div>
             <Toaster position="top-center" />

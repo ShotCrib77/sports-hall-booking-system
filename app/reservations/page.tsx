@@ -81,7 +81,6 @@ export default function MyReservationsPage() {
         <main className="min-h-screen bg-white font-sans">
 
             <div className="max-w-5xl mx-auto px-6 sm:px-10 py-12">
-                {/* Page header */}
                 <div className="flex items-end justify-between mb-9">
                     <div>
                         <p className="text-sm font-bold uppercase tracking-widest text-green-500 mb-1.5">
@@ -99,7 +98,6 @@ export default function MyReservationsPage() {
                     </Link>
                 </div>
 
-                {/* Stats */}
                 <div className="flex flex-wrap gap-4 mb-10 justify-center md:justify-start">
                     <StatCard
                         label="Upcoming"
@@ -114,7 +112,6 @@ export default function MyReservationsPage() {
                     />
                 </div>
 
-                {/* Tabs */}
                 <div className="flex gap-1 border-b border-gray-200 mb-6">
                 {(["upcoming", "past"] as Tab[]).map((tab) => (
                     <button
@@ -140,7 +137,6 @@ export default function MyReservationsPage() {
                 ))}
                 </div>
 
-                {/* Reservation list */}
                 {loading ? (
                     <div className="flex flex-col gap-3">
                         {[...Array(3)].map((_, i) => (

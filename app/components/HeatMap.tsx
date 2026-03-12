@@ -12,16 +12,16 @@ export default function HeatMap({ heatMapMatrix, totalCourts }: { heatMapMatrix:
     return (
         <section className="flex flex-col gap-2">
             <div className="flex gap-1">
-                <div className="w-11" /> {/* spacer to align with day labels */}
+                <div className="md:w-11 w-8" /> {/* spacer to align with day labels */}
                     {Array.from({ length: 14 }, (_, i) => (
-                        <div key={i} className="w-8 h-8 flex items-center justify-center text-sm font-semibold">
+                        <div key={i} className="w-4 h-4 md:w-8 md:h-8 flex items-center justify-center text-xs font-semibold md:text-base">
                             {i + 8}
                         </div>
                     ))}
             </div>
             {heatMapMatrix.map((dayTimes, dayIndex) => (
-                <div key={dayIndex} className="flex">
-                    <h2 className="w-12 text-center font-semibold">{days[dayIndex]}</h2>
+                <div key={dayIndex} className="flex items-center">
+                    <h2 className="md:w-12 w-8 text-center font-semibold text-xs mr-1 md:text-base">{days[dayIndex]}</h2>
                     <div className="flex gap-1">
                         {dayTimes.map((amountOfBookings, hourIndex) => {
                             if (hourIndex < 8 || hourIndex > 21) return null
@@ -32,7 +32,7 @@ export default function HeatMap({ heatMapMatrix, totalCourts }: { heatMapMatrix:
                                         onMouseEnter={(e) => setTooltip({ count: amountOfBookings, x: e.clientX, y: e.clientY })}
                                         onMouseMove={(e) => setTooltip(prev => prev ? {...prev, x: e.clientX, y: e.clientY} : null)}
                                         onMouseLeave={() => setTooltip(null)}
-                                        className="bg-emerald-600 w-8 h-8" style={{opacity: opacity}}
+                                        className="bg-emerald-600 w-4 h-4 md:w-8 md:h-8" style={{opacity: opacity}}
                                 
                                     />
                                     {tooltip && (

@@ -25,12 +25,12 @@ export default function DonutChart({label, config, data}: DonutChartProps) {
     const displayConfig = isEmpty ? {} : config;
 
     return (
-        <Card className={isEmpty ? "opacity-50" : ""}>
-            <CardHeader>
+        <Card className={`w-88 max-w-full overflow-hidden ${isEmpty ? "opacity-50" : ""}`}>
+            <CardHeader className="self-start flex flex-col">
                 <CardTitle>{label}</CardTitle>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={displayConfig} className="h-75">
+                <ChartContainer config={displayConfig} className="h-75 w-full max-w-full min-w-0">
                     <PieChart>
                         <Pie
                             data={displayData}
@@ -42,7 +42,7 @@ export default function DonutChart({label, config, data}: DonutChartProps) {
                             isAnimationActive={false}
                         />
                         {!isEmpty && <ChartTooltip content={<ChartTooltipContent />} />}
-                        {!isEmpty && <ChartLegend content={<ChartLegendContent />} />}
+                        {!isEmpty && <ChartLegend className="flex flex-wrap" content={<ChartLegendContent />} />}
                     </PieChart>
                 </ChartContainer>
                 {isEmpty && (

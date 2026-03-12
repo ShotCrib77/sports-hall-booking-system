@@ -99,19 +99,15 @@ export default function BookingPage() {
         <main>
             <section className="flex rounded-lg bg-white w-full min-h-[calc(100vh-80px)]">
                 <div className="p-8 flex flex-col md:flex-row gap-8 w-full">
-                    <div className="w-full md:w-fit shrink-0 self-start">
+
+                    <div className="w-full md:w-2/5 lg:w-fit shrink-0 self-start">
                         <div>
                             <h2 className="text-base text-green-500 uppercase tracking-[1px] font-semibold">Select a sport</h2>
                             <SportsSelection sports={sports} selectedSport={selectedSport} setSelectedSport={setSelectedSport} />
                         </div>
-                        {/* Calendar */}
+
                         <div>
                             <h2 className="text-base text-green-500 uppercase tracking-[1px] font-semibold">Select a date</h2>
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                            >
                                 <Calendar
                                     onMonthChange={(month) => {getBookings(month).then(setBookings)}}
                                     modifiers={{ highlighted: highlightedDates }}
@@ -126,11 +122,9 @@ export default function BookingPage() {
                                         caption_label: "text-lg font-semibold",
                                     }}
                                 />
-                            </motion.div>
                         </div>
                     </div>
 
-                    {/* Time selection */}
                     <div className="flex flex-col flex-1 md:border-l md:pl-8">
                         <h2 className="text-base text-green-500 uppercase tracking-[1px] font-semibold">Select a time</h2>
                         <h1 className="pb-2 font-bold text-2xl">{dateLabel}</h1>

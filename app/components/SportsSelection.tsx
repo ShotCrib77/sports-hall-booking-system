@@ -1,12 +1,8 @@
-import Image from "next/image";
-import { useState } from "react";
-
-
 export default function SportsSelection({sports, selectedSport, setSelectedSport}: {sports: string[], selectedSport: string, setSelectedSport: (sport: string) => void}) {
 
     const formattedSports: { sportName: string; sportSvg: string }[] = sports.map(sport => ({
         sportName: String(sport).charAt(0).toUpperCase() + String(sport).slice(1),
-        sportSvg: `${sport}.svg`
+        sportSvg: `/${sport.toLowerCase()}.svg`
     }))
     
     return (
