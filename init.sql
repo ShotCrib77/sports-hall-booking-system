@@ -1,8 +1,4 @@
-CREATE SCHEMA sports_hall;
-
-USE sports_hall;
-
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
 	user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(64),
     last_name VARCHAR(64),
@@ -13,13 +9,13 @@ CREATE TABLE users (
     is_banned BOOLEAN DEFAULT FALSE
 );
 
-CREATE TABLE courts (
+CREATE TABLE IF NOT EXISTS courts (
 	court_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     court_name VARCHAR(32) NOT NULL UNIQUE,
     sport VARCHAR(32) NOT NULL
 );
 
-CREATE TABLE bookings (
+CREATE TABLE IF NOT EXISTS bookings (
 	booking_id INT AUTO_INCREMENT PRIMARY KEY,
 	user_id INT NOT NULL,
 	court_id INT NOT NULL,

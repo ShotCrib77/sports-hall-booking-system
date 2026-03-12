@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import SportsSelection from "../components/booking/SportsSelection";
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const today = new Date();
 
 export default function BookingPage() {
     const router = useRouter();
@@ -128,17 +127,17 @@ export default function BookingPage() {
                     <div className="flex flex-col flex-1 md:border-l md:pl-8">
                         <h2 className="text-base text-green-500 uppercase tracking-[1px] font-semibold">Select a time</h2>
                         <h1 className="pb-2 font-bold text-2xl">{dateLabel}</h1>
+                            <div className="max-w-xl">
+                                <AvailableTimes
+                                    today={new Date()}
+                                    bookings={bookedBookings}
+                                    courts={courts}
+                                    date={formattedDate}
+                                    selectedBookings={selectedBookings}
+                                    handleSelect={handleSelect}
+                                />
+                            </div>
 
-                        <div className="max-w-xl">
-                            <AvailableTimes
-                                today={today}
-                                bookings={bookedBookings}
-                                courts={courts}
-                                date={formattedDate}
-                                selectedBookings={selectedBookings}
-                                handleSelect={handleSelect}
-                            />
-                        </div>
 
 
                         {/* Footer */}
