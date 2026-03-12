@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 import { pool } from "../../../lib/db"
+import { getUserIsAdmin } from "../../../lib/getUserIsAdmin"
 
 export async function GET(req: NextRequest) {
     try {
+        if (!await getUserIsAdmin(req)) {
+            return NextResponse.json({ error: "Forbidden" }, { status: 403 })
+        }
+        
         const { searchParams } = new URL(req.url)
         const date = searchParams.get("date")
 

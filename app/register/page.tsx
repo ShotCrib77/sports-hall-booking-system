@@ -57,7 +57,6 @@ export default function RegisterComponent() {
 
             if (!res.ok) {
                 setApiError({ error: true, message: data.error });
-                console.log(data.message);
             } else {
                 setSuccessful(true);
                 try {

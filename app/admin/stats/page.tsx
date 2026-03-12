@@ -38,7 +38,6 @@ export default function AdminStatsPage() {
                 const res = await fetch(`/api/admin/stats?from=${from}&to=${to}`)
                 if (res.ok) {
                     const data: AdminData = await res.json();
-                    console.log(data)
                     setKpiData(data.kpiData);
                     setBookingsBreakdownData(data.bookingsBreakdownData);
                     setSportsBreakdownData(data.sportsBreakdownData);

@@ -16,7 +16,6 @@ export async function proxy(req: NextRequest) {
 
     try {
         const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET_KEY));
-        console.log(payload.role)
         if (req.nextUrl.pathname.startsWith("/admin") && payload.role !== "admin") {
             return NextResponse.redirect(new URL("/", req.url));
         }

@@ -11,6 +11,10 @@ export async function POST(req: NextRequest) {
 
         const bookings: { court_id: number, booked_date: string, booked_time: string }[] = await req.json()
 
+        if (!Array.isArray(bookings) || bookings.length === 0 || bookings.length > 20) {
+            return NextResponse.json({ error: "Invalid input" }, { status: 400 })
+        }
+
         const connection = await pool.getConnection();
         await connection.beginTransaction();
 

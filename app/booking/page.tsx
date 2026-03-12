@@ -44,6 +44,7 @@ export default function BookingPage() {
                     s.booked_date === booking.booked_date
                 ));
             }
+            if (selectedBookings.length >= 20) return prev;
             return [...prev, booking];
         })
     }
@@ -143,7 +144,7 @@ export default function BookingPage() {
                         {/* Footer */}
                         <div className="mt-auto flex justify-between items-center border-t py-6 sticky bottom-0 bg-white ">
                             <div className="flex items-center text-base">
-                                <span className="text-gray-500">{selectedBookings.length} slots selected</span>
+                                <span className="text-gray-500">{selectedBookings.length >= 20 && "Max - "}{selectedBookings.length} slots selected</span>
                                 <button
                                     onClick={() => setSelectedBookings([])}
                                     className="text-gray-500"

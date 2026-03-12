@@ -12,7 +12,7 @@ interface TimeProps {
 
 export default function Time({ booked = false, index, courtId, date, time, selected, handleSelect }: TimeProps) {
     return booked ? (
-        <motion.button 
+        <motion.button
             disabled
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}

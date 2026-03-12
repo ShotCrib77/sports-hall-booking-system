@@ -21,6 +21,7 @@ export async function GET() {
         const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET_KEY))
         return NextResponse.json({ authenticated: true, role: payload.role });
     } catch (error) {
+        console.error(error)
         return NextResponse.json({ authenticated: false });
     }
 }
