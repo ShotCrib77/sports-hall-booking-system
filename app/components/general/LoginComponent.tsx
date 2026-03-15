@@ -44,7 +44,6 @@ export default function LoginComponent() {
             } else {
                 setSuccessful(true);
                 window.location.href = redirectTo
-                console.log("What da helli")
             }
         
         } catch (error) {

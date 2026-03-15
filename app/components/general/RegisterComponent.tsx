@@ -71,12 +71,12 @@ export default function RegisterComponent() {
 
                     if (!res.ok) {
                         setTimeout(() => {
-                            router.push(redirectTo);
+                            window.location.href = redirectTo
                         }, 750);
                     } else {
                         setTimeout(() => {
                             const directRedirect = searchParams.get("redirectTo") ?? "/reservations";
-                            router.push(directRedirect);
+                            window.location.href = directRedirect
                         }, 750)
                     }
                 

@@ -3,12 +3,7 @@ import { jwtVerify } from "jose";
 export async function proxy(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
     
-    console.log("PATH:", req.nextUrl.pathname);
-    console.log("TOKEN:", token);
-    console.log("ALL COOKIES:", req.cookies.getAll());
-    
     if (!token) {
-        console.log("No token?")
         const redirectTo = encodeURIComponent(req.nextUrl.pathname);
         return NextResponse.redirect(new URL(`/login?redirectTo=${redirectTo}`, req.url));
     }
@@ -21,13 +16,12 @@ export async function proxy(req: NextRequest) {
 
     try {
         const { payload } = await jwtVerify(token, new TextEncoder().encode(JWT_SECRET_KEY));
-        console.log(payload);
+        
         if (req.nextUrl.pathname.startsWith("/admin") && payload.role !== "admin") {
             return NextResponse.redirect(new URL("/", req.url));
         }
 
-    } catch (error) {
-        console.error(error)
+    } catch {
         const redirectTo = encodeURIComponent(req.nextUrl.pathname);
         return NextResponse.redirect(new URL(`/login?redirectTo=${redirectTo}`, req.url));
     }
