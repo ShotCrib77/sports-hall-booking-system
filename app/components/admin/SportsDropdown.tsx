@@ -15,7 +15,7 @@ export default function SportsDropdown({ sports, selectedSport, setSelectedSport
                 defaultValue={selectedSport.toString()}
                 onValueChange={(value) => setSelectedSport(value)}
             >
-                <SelectTrigger className="bg-green-500 text-white border-green-700 border-2">
+                <SelectTrigger className="text-gray-600 font-semibold border-gray-600 border-2 px-3 py-1 rounded-full h-auto">
                     <SelectValue />
                 </SelectTrigger>
                 <SelectContent position="popper">

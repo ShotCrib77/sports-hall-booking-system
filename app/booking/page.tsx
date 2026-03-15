@@ -99,7 +99,7 @@ export default function BookingPage() {
             <section className="flex rounded-lg bg-white w-full min-h-[calc(100vh-80px)]">
                 <div className="p-8 flex flex-col md:flex-row gap-8 w-full">
 
-                    <div className="w-full md:w-2/5 lg:w-fit shrink-0 self-start">
+                    <div className="w-full md:w-2/5 lg:w-fit shrink-0 self-start sticky top-0">
                         <div>
                             <h2 className="text-base text-green-500 uppercase tracking-[1px] font-semibold">Select a sport</h2>
                             <SportsSelection sports={sports} selectedSport={selectedSport} setSelectedSport={setSelectedSport} />

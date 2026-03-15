@@ -24,7 +24,7 @@ export default function Navbar() {
     }, [pathname])
 
     return (
-        <header className="bg-white border-b-2 h-20 text-xl flex items-center px-8 text-gray-800">
+        <header className="bg-white border-b-2 h-20 text-xl flex items-center px-8 text-gray-800 sticky top-0 z-50">
             <div className="flex items-center">
                 <h1 className="text-3xl font-bold text-green-700">Courtside</h1>
                 {userRole === "admin" && 
