@@ -32,3 +32,13 @@ CREATE TABLE IF NOT EXISTS bookings (
     ) STORED,
 	UNIQUE KEY uq_active_slot (active_slot)
 );
+
+INSERT INTO courts (court_name, sport) VALUES ("Tennis A", "tennis");
+INSERT INTO courts (court_name, sport) VALUES ("Tennis B", "tennis");
+INSERT INTO courts (court_name, sport) VALUES ("Badminton A", "badminton");
+INSERT INTO courts (court_name, sport) VALUES ("Badminton B", "badminton");
+INSERT INTO courts (court_name, sport) VALUES ("Badminton C", "badminton");
+INSERT INTO courts (court_name, sport) VALUES ("Badminton D", "badminton");
+INSERT INTO courts (court_name, sport) VALUES ("Badminton E", "badminton");
+INSERT INTO courts (court_name, sport) VALUES ("Badminton F", "badminton");
+INSERT INTO courts (court_name, sport) VALUES ("Padel A", "padel");
