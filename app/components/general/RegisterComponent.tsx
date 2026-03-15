@@ -10,7 +10,7 @@ export default function RegisterComponent() {
     const router = useRouter();
 
     const searchParams = useSearchParams();
-    const redirectTo = searchParams.get("redirectTo") ? `/login?redirectTo=${searchParams.get("redirectTo")}` : "/login"
+    const redirectTo = searchParams.get("redirectTo") ? `/login?redirectTo=${decodeURIComponent(searchParams.get("redirectTo")!)}` : "/login"
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");

@@ -9,7 +9,7 @@ import SuccessfulAuthentification from "./SuccessfulAuthentification";
 export default function LoginComponent() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const redirectTo = searchParams.get("redirectTo") ?? "/"
+    const redirectTo = decodeURIComponent(searchParams.get("redirectTo") ?? "/")
 
     const [successful, setSuccessful] = useState(false)
 
