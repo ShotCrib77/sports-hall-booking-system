@@ -21,7 +21,8 @@ export async function proxy(req: NextRequest) {
             return NextResponse.redirect(new URL("/", req.url));
         }
 
-    } catch {
+    } catch (error) {
+        console.error(error)
         const redirectTo = encodeURIComponent(req.nextUrl.pathname);
         return NextResponse.redirect(new URL(`/login?redirectTo=${redirectTo}`, req.url));
     }
