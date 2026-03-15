@@ -3,7 +3,12 @@ import { jwtVerify } from "jose";
 export async function proxy(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
     
+    console.log("PATH:", req.nextUrl.pathname);
+    console.log("TOKEN:", token);
+    console.log("ALL COOKIES:", req.cookies.getAll());
+    
     if (!token) {
+        console.log("No token?")
         const redirectTo = req.nextUrl.pathname
         return NextResponse.redirect(new URL(`/login?redirectTo=${redirectTo}`, req.url));
     }
