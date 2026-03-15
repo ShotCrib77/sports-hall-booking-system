@@ -42,10 +42,8 @@ export default function LoginComponent() {
             if (!res.ok) {
                 setApiError(true)
             } else {
-                setSuccessful(true)
-                setTimeout(() => {
-                    router.push(redirectTo);
-                }, 1500)
+                setSuccessful(true);
+                router.push(redirectTo);
             }
         
         } catch (error) {
