@@ -3,11 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react" ;
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import SuccessfulAuthentification from "./SuccessfulAuthentification";
 
 export default function LoginComponent() {
-    const router = useRouter();
     const searchParams = useSearchParams();
     const redirectTo = decodeURIComponent(searchParams.get("redirectTo") ?? "/")
 
