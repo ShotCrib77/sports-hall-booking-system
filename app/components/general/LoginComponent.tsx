@@ -43,8 +43,7 @@ export default function LoginComponent() {
                 setApiError(true)
             } else {
                 setSuccessful(true);
-                console.log("Pushing to:", redirectTo);
-                router.push(redirectTo);
+                window.location.href = redirectTo
                 console.log("What da helli")
             }
         
