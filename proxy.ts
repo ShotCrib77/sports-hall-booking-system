@@ -21,11 +21,11 @@ export async function proxy(req: NextRequest) {
         }
 
     } catch {
-        const redirectTo = req.nextUrl.pathname
+        const redirectTo = encodeURIComponent(req.nextUrl.pathname);
         return NextResponse.redirect(new URL(`/login?redirectTo=${redirectTo}`, req.url));
     }
 }
 
 export const config = {
-    matcher: ["/booking/:path+", "/admin/:path*", "/reservations/:path*"]
+    matcher: ["/booking/:path+", "/admin/:path*", "/reservations"]
 }
