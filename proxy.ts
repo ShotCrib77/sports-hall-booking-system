@@ -9,7 +9,7 @@ export async function proxy(req: NextRequest) {
     
     if (!token) {
         console.log("No token?")
-        const redirectTo = req.nextUrl.pathname
+        const redirectTo = encodeURIComponent(req.nextUrl.pathname);
         return NextResponse.redirect(new URL(`/login?redirectTo=${redirectTo}`, req.url));
     }
     
